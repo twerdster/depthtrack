@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.20)
+project(DepthTrackJni LANGUAGES C CXX)
+get_filename_component(DEPTHTRACK_ROOT "${CMAKE_CURRENT_LIST_DIR}/../../../../../.." ABSOLUTE)
+set(DEPTHTRACK_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(DEPTHTRACK_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+add_subdirectory("${DEPTHTRACK_ROOT}" "${CMAKE_CURRENT_BINARY_DIR}/depthtrack")
+add_library(depthtrack_jni SHARED depthtrack_jni.cpp)
+target_link_libraries(depthtrack_jni PRIVATE DepthTrack::depthtrack)

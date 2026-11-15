@@ -1,0 +1,80 @@
+name: Validate DepthTrack
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  desktop:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - run: cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build/native --parallel 4
+      - run: ctest --test-dir build/native --output-on-failure
+      - run: python tests/python/test_tracker.py
+      - run: python -m depthtrack replay samples/handmesh/tracking_fixture.json --verify
+      - run: python tools/unpack_sample.py --output build/depth.u16
+      - run: node --test web/tests/*.test.mjs
+      - run: python backends/validate.py --cpu
+      - name: iOS static cross-builds
+        if: runner.os == 'macOS'
+        run: |
+          cmake -S . -B build/ios-device -G Xcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO -DDEPTHTRACK_BUILD_TESTS=OFF -DDEPTHTRACK_BUILD_EXAMPLES=OFF
+          cmake --build build/ios-device --config Release -- CODE_SIGNING_ALLOWED=NO
+          cmake -S . -B build/ios-simulator -G Xcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO -DDEPTHTRACK_BUILD_TESTS=OFF -DDEPTHTRACK_BUILD_EXAMPLES=OFF
+          cmake --build build/ios-simulator --config Release -- CODE_SIGNING_ALLOWED=NO
+      - name: FPGA simulation prerequisites
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y iverilog
+      - name: FPGA simulation
+        if: runner.os == 'Linux'
+        run: python backends/fpga/sim/run.py --all-fixtures --uart
+  android-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Locate Android NDK
+        shell: bash
+        run: |
+          ndk_dir="${ANDROID_NDK_LATEST_HOME:-}"
+          if [ ! -f "$ndk_dir/build/cmake/android.toolchain.cmake" ]; then
+            "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" 'ndk;27.2.12479018'
+            ndk_dir="$ANDROID_HOME/ndk/27.2.12479018"
+          fi
+          echo "DEPTHTRACK_NDK=$ndk_dir" >> "$GITHUB_ENV"
+      - name: Cross-compile arm64 JNI library
+        run: >-
+          cmake -S examples/android/app/src/main/cpp -B build/android
+          -DCMAKE_TOOLCHAIN_FILE="$DEPTHTRACK_NDK/build/cmake/android.toolchain.cmake"
+          -DANDROID_ABI=arm64-v8a -DANDROID_PLATFORM=android-24
+          -DCMAKE_BUILD_TYPE=Release
+      - run: cmake --build build/android --parallel 4
+  pages:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: [desktop, android-build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: web
+      - id: deployment
+        uses: actions/deploy-pages@v4

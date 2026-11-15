@@ -1,0 +1,4 @@
+_build/
+fpga/build/
+__pycache__/
+*.pyc

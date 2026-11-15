@@ -1,0 +1,114 @@
+{
+  "checked_at_utc": "2026-11-15T11:59:38.619546+00:00",
+  "status": "passed",
+  "source_sha256": {
+    "CMakeLists.txt": "0c8f50e2f48d8a44cc9d558c91b4f8fe8c31222ee6810155bddf54c80b9fadb0",
+    "include/depthtrack/depthtrack.h": "a7459dcdc8dc871442042c2ffa88a1496c1d42e220b3f7e5b23475bf5e183e67",
+    "src/tracker.cpp": "67a74f56b79b7a52580027f749573a82bd4422ba09d921f329ba5b365914669a",
+    "examples/tracking_csv.cpp": "fe666278e3b5bb4047067d2f59dc423fe30beb6abdb0596f42616149f53f0bdc",
+    "examples/swift/PointTracker.swift": "7bdbb6f7d2062c4192cd1ea24a951c35dbfcdc63ebc8f06972a4db7e839a6c63",
+    "examples/android/app/src/main/cpp/depthtrack_jni.cpp": "c24cfd221b9edc52e8cc889ee6960be4934aeda7edc7b40b09ed00ce0c3ab15a",
+    "tests/native/test_tracker.cpp": "0ccb76a19346545c5bcf2cd67e79e6b5ac06bcb771a12744bb7953e8991c1c8f",
+    "tests/native/test_golden.py": "2edfc05e07e034b532aae152d4cf1318050a6000dad3e339892becae07ee7c90",
+    "samples/handmesh/tracking_fixture.csv": "b25f1759aa9f0255a4a1e46a492cfa06bdc71d3bdf7bf96f3adc1c2fa07d283c",
+    "samples/handmesh/tracking_fixture.json": "5f0c68a6c4d303ac4999a14af4c7a8427d289f28cfc707543ec47cfd80024247"
+  },
+  "mac_native": {
+    "compiler": "AppleClang16.0.0.16000026",
+    "configuration": "Release",
+    "ctest_passed": [
+      "native_unit",
+      "native_golden_csv",
+      "c_header",
+      "native_golden_json"
+    ],
+    "golden_states": 650,
+    "tolerance_absolute": 1e-08,
+    "full_history_parity": true
+  },
+  "apple_cross_compilation": {
+    "xcode": "Xcode 16.1\nBuild version 16B40",
+    "targets": [
+      "arm64 iPhoneOS18.1/min15.0",
+      "arm64 iPhoneSimulator18.1/min15.0"
+    ],
+    "static_library_builds_passed": true,
+    "swift_typechecks_passed": [
+      "macOS",
+      "arm64 iOS15.0",
+      "arm64 iOS15.0-simulator"
+    ],
+    "device_or_simulator_app_executed": false,
+    "signing_used": false
+  },
+  "android": {
+    "ndk_locally_built": false,
+    "kotlin_app_built": false,
+    "device_executed": false,
+    "status": "integration examples only; no NDK installed for this task"
+  },
+  "artifacts": [
+    {
+      "path": "build/native/libdepthtrack.a",
+      "bytes": 10120,
+      "sha256": "0ea269dcdd2511690e90d72a511c12a7b2342962b923e28c244e50723fc54fd4",
+      "architecture": "Non-fat file: build/native/libdepthtrack.a is architecture: arm64",
+      "mach_o_build_versions": [
+        [
+          "cmd LC_BUILD_VERSION",
+          "cmdsize 24",
+          "platform 1",
+          "minos 15.0",
+          "sdk 15.1",
+          "ntools 0",
+          "Load command 2"
+        ]
+      ]
+    },
+    {
+      "path": "build/ios-device/Release-iphoneos/libdepthtrack.a",
+      "bytes": 10416,
+      "sha256": "ec1edd227850e095d69d58734b227d8e426e506899114dd04b9268784e5d967d",
+      "architecture": "Non-fat file: build/ios-device/Release-iphoneos/libdepthtrack.a is architecture: arm64",
+      "mach_o_build_versions": [
+        [
+          "cmd LC_BUILD_VERSION",
+          "cmdsize 24",
+          "platform 2",
+          "minos 15.0",
+          "sdk 18.1",
+          "ntools 0",
+          "Load command 2"
+        ]
+      ]
+    },
+    {
+      "path": "build/ios-simulator/Release-iphonesimulator/libdepthtrack.a",
+      "bytes": 10120,
+      "sha256": "d172d28ee3328b5c640c09deb82415caf9575708976a9c0ddaa34bd6ebc8e4f1",
+      "architecture": "Non-fat file: build/ios-simulator/Release-iphonesimulator/libdepthtrack.a is architecture: arm64",
+      "mach_o_build_versions": [
+        [
+          "cmd LC_BUILD_VERSION",
+          "cmdsize 24",
+          "platform 7",
+          "minos 15.0",
+          "sdk 18.1",
+          "ntools 0",
+          "Load command 2"
+        ]
+      ]
+    }
+  ],
+  "numerical_extension": "Native rejects elapsed timestamp overflow and nonfinite computed filter states atomically; ordinary-data reference parity unchanged.",
+  "commands": [
+    "cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release",
+    "cmake --build build/native -j4",
+    "ctest --test-dir build/native --output-on-failure",
+    "cmake -S . -B build/ios-device -G Xcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 -DCMAKE_XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED=NO -DDEPTHTRACK_BUILD_TESTS=OFF -DDEPTHTRACK_BUILD_EXAMPLES=OFF",
+    "cmake --build build/ios-device --config Release -- CODE_SIGNING_ALLOWED=NO",
+    "Equivalent simulator configure/build with iphonesimulator sysroot",
+    "xcrun swiftc -typecheck -import-objc-header examples/swift/DepthTrack-Bridging-Header.h -I include examples/swift/PointTracker.swift",
+    "Same Swift typecheck with target+SDK for iOS device/simulator"
+  ]
+}

@@ -1,0 +1,367 @@
+{
+  "schema": "depthtrack-prior-backend-evidence-v1",
+  "execution_date": "2026-11-14",
+  "prior_execution": true,
+  "reexecuted_by_packaging": false,
+  "sanitized_extract": true,
+  "scope": "Six identical prepared128x128 frames, complete seven-class ten-split prefix, background7 unknown255. Prior actual MacCPU/Metal and physical Mojo execution; no capture or full-depth finger tracker.",
+  "original_report_sha256": "7a6493536b9afb3499be7797c95e56dd713cb0cc97a3e2234cb5c60ec5269d09",
+  "validation": {
+    "fixture_pixels": 98304,
+    "label_pixels_compared_across_two_cpu_variants_gpu_and_physical_fpga": 393216,
+    "independent_original_model_oracle_label_pixels": 98304,
+    "heap_trace_pixels_compared_cpu_variants_oracle_and_gpu": 393216,
+    "label_mismatches": 0,
+    "heap_trace_mismatches": 0,
+    "model_and_input_hashes_identical": true
+  },
+  "timing_groups": {
+    "recorded": {
+      "fixtures": [
+        "historical_000",
+        "historical_001",
+        "historical_002",
+        "historical_003",
+        "historical_004"
+      ],
+      "aggregation": "Pooled median of measured per-frame latencies; physical FPGA one observation per fixture.",
+      "cpu_gpu_samples_per_engine": 500,
+      "physical_runs": 5,
+      "medians": {
+        "cpu_literal_float32_ms": 0.24012499999999998,
+        "cpu_integer_raw_cut_ms": 0.1112495,
+        "gpu_kernel_ms": 0.031250063329935074,
+        "gpu_host_input_to_labels_ms": 0.2028745,
+        "fpga_core_ms": 1.3425,
+        "fpga_host_frame_to_labels_ms": 16382.186332950369
+      }
+    },
+    "dense_stress": {
+      "fixtures": [
+        "stress_dense"
+      ],
+      "aggregation": "Pooled median of measured per-frame latencies; physical FPGA one observation per fixture.",
+      "cpu_gpu_samples_per_engine": 100,
+      "physical_runs": 1,
+      "medians": {
+        "cpu_literal_float32_ms": 2.559375,
+        "cpu_integer_raw_cut_ms": 1.125,
+        "gpu_kernel_ms": 0.037999998312443495,
+        "gpu_host_input_to_labels_ms": 0.209396,
+        "fpga_core_ms": 8.44018,
+        "fpga_host_frame_to_labels_ms": 16392.58633297868
+      }
+    }
+  },
+  "timing_scope": {
+    "cpu": "One inference call, one128x128 frame, preloaded model/input and preallocated buffers; class-label writes only, no reached-leaf writes in timed calls; serial CPU loop. Untimed full label+heap validation is separate. Excludes loading, comparison, hashing, allocations, writes. Literal includes final7class weighted voting; integer uses precomputed terminal labels.",
+    "gpu": {
+      "excluded": "FileI/O,modelupload,librarycompilation,allocation,warmups,hashing,validationcomparisons,rendering,cameracapture",
+      "gpu_ms": "MTLCommandBuffer.gpuEndTime-gpuStartTime after completion; single tree-classification kernel, no trace output, oneframepercommandbuffer",
+      "host_input_to_labels_ms": "CPUwalltime inputcopy32768B into preallocatedsharedGPUbuffer,encode/submit/wait,copy16384classbytes topreallocatedCPUstorage",
+      "input": "IdenticalpreprocessedCPUdepthbytes;modelloadedonce;noCPUtreecomputationorGPUfallback",
+      "trace": "Reachedheapleafids producedonlyduringuntimed validation, nottimedkernelwrites orhostcopies"
+    },
+    "fpga": "core cycles separately; host already-prepared CPU frame upload/run/read; capture, model upload, reference and rendering excluded",
+    "fpga_nominal_clock_hz": 50000000,
+    "fpga_clock_independently_measured": false,
+    "sample_counts": "CPU/GPU100 measured frames per fixture after30 excluded warmups; physical FPGA one run per fixture.",
+    "fpga_host": "Already prepared CPU depth bytes: upload+run-command/reply+download. Includes host protocol waits; model configuration excluded.",
+    "comparison_caution": "Device compute and input-to-readable-label scopes differ and are shown separately. No live-capture cadence or accuracy claim."
+  },
+  "fixtures": [
+    {
+      "fixture": "historical_000",
+      "synthetic": false,
+      "width": 128,
+      "height": 128,
+      "input_sha256": "21181c59964d329d365fc74d9a5927f356245c61580ff4809b043ec38628b2c9",
+      "reference_labels_sha256": "63a789acfe66469fe7755d652060752bd66bf905666c540f508ab1d126bd3591",
+      "reference_heap_trace_sha256": "5f791d2e55fa62193e031c93be9cc48a4742edcaa301ee43e2909d648a2c36b9",
+      "nonzero_centres": 1433,
+      "cpu": {
+        "literal_float32": {
+          "median_ms": 0.229771,
+          "samples": 100,
+          "threads": 1,
+          "output": "class labels only"
+        },
+        "integer_raw_cut": {
+          "median_ms": 0.0993745,
+          "samples": 100,
+          "threads": 1,
+          "output": "class labels only"
+        }
+      },
+      "gpu": {
+        "kernel_median_ms": 0.031249946914613247,
+        "host_input_to_labels_median_ms": 0.202583,
+        "samples": 100
+      },
+      "fpga": {
+        "core_cycles": 67125,
+        "core_error": 0,
+        "core_ms_at_nominal_clock": 1.3425,
+        "upload_ms": 11133.190082968213,
+        "run_command_reply_ms": 20.83749999292195,
+        "download_ms": 5233.017000020482,
+        "host_frame_to_labels_ms": 16387.044582981616,
+        "physical_runs": 1
+      }
+    },
+    {
+      "fixture": "historical_001",
+      "synthetic": false,
+      "width": 128,
+      "height": 128,
+      "input_sha256": "4a90124b68fb25a2d95ec6d42c11b0a66b90e40b1a046e27dd138734d4aa54aa",
+      "reference_labels_sha256": "0027442b0fd974e2da8b79de699cf65eade2931c84704f24e4b76c960de31624",
+      "reference_heap_trace_sha256": "98fd35f7f4f18b5fa21d29e10a9b3f27f2fa1c3c2b2c42a82244189db4233243",
+      "nonzero_centres": 1414,
+      "cpu": {
+        "literal_float32": {
+          "median_ms": 0.232396,
+          "samples": 100,
+          "threads": 1,
+          "output": "class labels only"
+        },
+        "integer_raw_cut": {
+          "median_ms": 0.101646,
+          "samples": 100,
+          "threads": 1,
+          "output": "class labels only"
+        }
+      },
+      "gpu": {
+        "kernel_median_ms": 0.03087497316300869,
+        "host_input_to_labels_median_ms": 0.201063,
+        "samples": 100
+      },
+      "fpga": {
+        "core_cycles": 66832,
+        "core_error": 0,
+        "core_ms_at_nominal_clock": 1.33664,
+        "upload_ms": 11127.80712498352,
+        "run_command_reply_ms": 20.83529205992818,
+        "download_ms": 5232.998999999836,
+        "host_frame_to_labels_ms": 16381.641417043284,
+        "physical_runs": 1
+      }
+    },
+    {
+      "fixture": "historical_002",
+      "synthetic": false,
+      "width": 128,
+      "height": 128,
+      "input_sha256": "33cde18d9ee74e4eea4a0b6c4441e4200fedc365060ab8a0c6fa6aa6b22e97cf",
+      "reference_labels_sha256": "76eab0be7c9545cea54848e7b76e6b61b68e72091a8e18749ab1ef9edd0d3acc",
+      "reference_heap_trace_sha256": "d51f946fb1c00847d9727621d517e9a91010a3062a42415feb2cab9e5ce8e21c",
+      "nonzero_centres": 4248,
+      "cpu": {
+        "literal_float32": {
+          "median_ms": 0.6264375,
+          "samples": 100,
+          "threads": 1,
+          "output": "class labels only"
+        },
+        "integer_raw_cut": {
+          "median_ms": 0.2579995,
+          "samples": 100,
+          "threads": 1,
+          "output": "class labels only"
+        }
+      },
+      "gpu": {
+        "kernel_median_ms": 0.03129162359982729,
+        "host_input_to_labels_median_ms": 0.20297949999999998,
+        "samples": 100
+      },
+      "fpga": {
+        "core_cycles": 134373,
+        "core_error": 0,
+        "core_ms_at_nominal_clock": 2.68746,
+        "upload_ms": 11139.043833012693,
+        "run_command_reply_ms": 19.811582984402776,
+        "download_ms": 5235.068624955602,
+        "host_frame_to_labels_ms": 16393.924040952697,
+        "physical_runs": 1
+      }
+    },
+    {
+      "fixture": "historical_003",
+      "synthetic": false,
+      "width": 128,
+      "height": 128,
+      "input_sha256": "f7fd5645e7b1fd336cf3df010a580169029cc2b597c7bae6028e263faaf3bd8a",
+      "reference_labels_sha256": "17f770db5af05546c12d2b949b81b7270cc951685a3cd5fc864e8642a124d72c",
+      "reference_heap_trace_sha256": "9c18db7d29d8f45a101860705127280f29f3bda9a286fcaaa912b0561f9e1903",
+      "nonzero_centres": 2066,
+      "cpu": {
+        "literal_float32": {
+          "median_ms": 0.3193125,
+          "samples": 100,
+          "threads": 1,
+          "output": "class labels only"
+        },
+        "integer_raw_cut": {
+          "median_ms": 0.133604,
+          "samples": 100,
+          "threads": 1,
+          "output": "class labels only"
+        }
+      },
+      "gpu": {
+        "kernel_median_ms": 0.03143755020573735,
+        "host_input_to_labels_median_ms": 0.20362449999999999,
+        "samples": 100
+      },
+      "fpga": {
+        "core_cycles": 82109,
+        "core_error": 0,
+        "core_ms_at_nominal_clock": 1.64218,
+        "upload_ms": 11128.142250003293,
+        "run_command_reply_ms": 19.70099995378405,
+        "download_ms": 5232.937707914971,
+        "host_frame_to_labels_ms": 16380.780957872048,
+        "physical_runs": 1
+      }
+    },
+    {
+      "fixture": "historical_004",
+      "synthetic": false,
+      "width": 128,
+      "height": 128,
+      "input_sha256": "677420f328aeda2421ff4f8a6172c9d44b9ff0603588218433b31614a7933c63",
+      "reference_labels_sha256": "fd95b2a721b4b174aadec6222e40501c55333e699c9828ec1a6806a2bcec495e",
+      "reference_heap_trace_sha256": "f8db2fb5bb1cf7f388a03d39020882e47fbdc39ce08dedc05c69c6bcb74c6201",
+      "nonzero_centres": 1204,
+      "cpu": {
+        "literal_float32": {
+          "median_ms": 0.193396,
+          "samples": 100,
+          "threads": 1,
+          "output": "class labels only"
+        },
+        "integer_raw_cut": {
+          "median_ms": 0.0874795,
+          "samples": 100,
+          "threads": 1,
+          "output": "class labels only"
+        }
+      },
+      "gpu": {
+        "kernel_median_ms": 0.031250063329935074,
+        "host_input_to_labels_median_ms": 0.20391700000000001,
+        "samples": 100
+      },
+      "fpga": {
+        "core_cycles": 61711,
+        "core_error": 0,
+        "core_ms_at_nominal_clock": 1.23422,
+        "upload_ms": 11129.495750064962,
+        "run_command_reply_ms": 19.733249908313155,
+        "download_ms": 5232.957332977094,
+        "host_frame_to_labels_ms": 16382.186332950369,
+        "physical_runs": 1
+      }
+    },
+    {
+      "fixture": "stress_dense",
+      "synthetic": true,
+      "width": 128,
+      "height": 128,
+      "input_sha256": "ec4933ab8ee1d7dc43d74cceef965aeb3557c632a18ac1c2e22a00fc04582315",
+      "reference_labels_sha256": "236db222ada6d8e80790fde751fa7784b12bebbc8dc5093f26f3427cd8e9723b",
+      "reference_heap_trace_sha256": "bd41be5ab3d48183646f18601448d9fc5beae4f31dcc0eec082824e6e429ef74",
+      "nonzero_centres": 16384,
+      "cpu": {
+        "literal_float32": {
+          "median_ms": 2.559375,
+          "samples": 100,
+          "threads": 1,
+          "output": "class labels only"
+        },
+        "integer_raw_cut": {
+          "median_ms": 1.125,
+          "samples": 100,
+          "threads": 1,
+          "output": "class labels only"
+        }
+      },
+      "gpu": {
+        "kernel_median_ms": 0.037999998312443495,
+        "host_input_to_labels_median_ms": 0.209396,
+        "samples": 100
+      },
+      "fpga": {
+        "core_cycles": 422009,
+        "core_error": 0,
+        "core_ms_at_nominal_clock": 8.44018,
+        "upload_ms": 11128.754541045055,
+        "run_command_reply_ms": 20.83312498871237,
+        "download_ms": 5242.998666944914,
+        "host_frame_to_labels_ms": 16392.58633297868,
+        "physical_runs": 1
+      }
+    }
+  ],
+  "fpga_build": {
+    "target": {
+      "part": "xc6slx9-2-tqg144",
+      "top": "mojo_top",
+      "MAX_LEVELS": 10,
+      "CONTEXTS": 4,
+      "nominal_clock_hz": 50000000,
+      "clock_frequency_independently_measured": false,
+      "bitgen": "Release14.7 Bitgen P.20131013 lin64",
+      "encrypted": false
+    },
+    "post_route_resources": {
+      "slice_registers_total": 2622,
+      "flip_flops": 2612,
+      "latches": 0,
+      "and_or_register_logic": 10,
+      "slice_luts": 4284,
+      "available_slice_luts": 5720,
+      "occupied_slices": 1337,
+      "available_slices": 1430,
+      "RAMB16BWER": 29,
+      "RAMB8BWER": 2,
+      "DSP48A1": 8,
+      "available_DSP48A1": 16,
+      "bonded_IOBs": 22,
+      "IOBs_with_LOC": 22,
+      "BUFG": 1
+    },
+    "timing": {
+      "constraint": "TS_clk PERIOD clk 50MHz HIGH50%",
+      "minimum_period_ns": 17.055,
+      "setup_slack_ns": 2.945,
+      "hold_slack_ns": 0.298,
+      "timing_errors": 0,
+      "setup_errors": 0,
+      "hold_errors": 0,
+      "component_switching_limit_errors": 0,
+      "paths_analyzed": 9080629,
+      "endpoints_analyzed": 14445,
+      "failing_endpoints": 0,
+      "all_signals_routed": true,
+      "all_constraints_met": true,
+      "actual_twr_summary": "================================================================================\nTiming constraint: TS_clk = PERIOD TIMEGRP \"clk\" 50 MHz HIGH 50%;\nFor more information, see Period Analysis in the Timing Closure User Guide (UG612).\n\n 9080629 paths analyzed, 14445 endpoints analyzed, 0 failing endpoints\n 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)\n Minimum period is  17.055ns.\n--------------------------------------------------------------------------------",
+      "limitation": "Only the internal clock period is constrained. This is not complete external I/O timing closure or proof of physical UART behavior."
+    }
+  },
+  "bitstream": {
+    "file": "fpga/images/mojo_depth10_50mhz.bin",
+    "bytes": 340884,
+    "sha256": "ea23c4e4bf2cbde3a8e76b9678ddfef90315428adec3bf0e1992c1a998929c0f"
+  },
+  "limits": [
+    "The physical protocol returns labels/counters, not reached-heap traces. Heap validation was RTL simulation plus CPU/GPU.",
+    "Device compute and prepared-host-frame-to-labels are different timing scopes.",
+    "Nominal board clock50MHz was not independently measured.",
+    "Sparse recorded examples and dense synthetic stress stay separate.",
+    "Model training provenance and recognition accuracy are not established.",
+    "No physical board action or new controlled benchmark is part of packaging."
+  ]
+}

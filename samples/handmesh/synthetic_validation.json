@@ -1,0 +1,32 @@
+{
+  "passed": true,
+  "parameters": {
+    "min_cutoff_hz": 1.2,
+    "speed_beta": 0.02,
+    "derivative_cutoff_hz": 1.0,
+    "max_cutoff_hz": 10.0,
+    "jump_slack_mm": 25.0,
+    "max_speed_mm_s": 1200.0,
+    "hold_seconds": 0.25,
+    "reset_gap_seconds": 0.45,
+    "trail_seconds": 0.65
+  },
+  "checks": {
+    "nonzero_stationary_initialization_no_origin_pull": true,
+    "invalid_timestamp_rejected_atomically": true,
+    "bounded_missing_hold_expiry_reacquisition": true,
+    "single_spike_rejected_coherent_relocation_confirmed": true,
+    "nonfinite_point_is_missing_not_measurement": true,
+    "stationary_noise_reduction": {
+      "raw_rmse_mm": 6.8667117610597925,
+      "filtered_rmse_mm": 4.90096628386011
+    },
+    "known_moving_path_adapts_better_than_fixed_smoothing": {
+      "adaptive_rmse_mm": 9.096101859489524,
+      "fixed_cutoff_rmse_mm": 28.635456062702502
+    },
+    "causal_prefix_invariance": true,
+    "irregular_capture_intervals_finite": true
+  },
+  "synthetic_only": true
+}

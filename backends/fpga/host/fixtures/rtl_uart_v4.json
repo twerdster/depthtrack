@@ -1,0 +1,47 @@
+{
+  "description": "Actual UART response bytes from tb_tree_uart RTL simulation through the Mojo bridge and serial_tx at 500000 baud with delayed AVR acknowledgement. Simulation evidence, not a physical capture.",
+  "source": "sim/uart-replies.hex",
+  "source_sha256": "3ee0c4bfc0f8449d4ef29c53b0a441c082a2f8a4409fa50db21d65670a6fc149",
+  "response_hex": [
+    "5a81210f000400800080000040000000000a014996",
+    "5a832203002000ddc5",
+    "5a842301050b2f",
+    "5a8324010132bb",
+    "5a81250f000400800080000040000000000a01c1d5",
+    "5a83260104f785",
+    "5a862705000500000082c4",
+    "5a8631010441ff",
+    "5a8632050005003f00f59f",
+    "5a82280100c6a8",
+    "5a852901073cbe",
+    "5a812a0f00040080008000004005003f000a01799b",
+    "5a872b0100d34d",
+    "5a81610f000400800080000040000000000a014dee"
+  ],
+  "ping_cases": [
+    {
+      "response_index": 0,
+      "sequence": 33,
+      "node_count": 0,
+      "leaf_count": 0
+    },
+    {
+      "response_index": 4,
+      "sequence": 37,
+      "node_count": 0,
+      "leaf_count": 0
+    },
+    {
+      "response_index": 11,
+      "sequence": 42,
+      "node_count": 5,
+      "leaf_count": 63
+    },
+    {
+      "response_index": 13,
+      "sequence": 97,
+      "node_count": 0,
+      "leaf_count": 0
+    }
+  ]
+}

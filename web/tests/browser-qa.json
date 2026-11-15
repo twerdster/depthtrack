@@ -1,0 +1,33 @@
+{
+  "date": "2026-11-15",
+  "environment": "Chrome on development Mac; native computer-use inspection",
+  "recorded_data": {
+    "frames": 130,
+    "observations": 635,
+    "javascript_reference_state_objects": 650,
+    "recorded_max_numeric_difference_from_python": 0
+  },
+  "executed": {
+    "desktop_initial_load": true,
+    "responsive_emulation_390x844": true,
+    "play_advances_recorded_timestamps": true,
+    "pause_stops_playback": true,
+    "keyboard_step_to_exact_frame66": true,
+    "before_after_view_switch": true,
+    "frame66_original_fresh_count": 1,
+    "frame66_new_fresh_count": 5,
+    "phone_controls_above_canvas": true,
+    "phone_comparison_panels_stack": true,
+    "viewport_override_reset": true,
+    "devtools_closed_after_test": true
+  },
+  "not_executed": [
+    "Physical iOS Safari",
+    "Physical Android Chrome",
+    "Mobile touch input",
+    "Linux graphical browser",
+    "Safari/WebKit engine",
+    "Live camera or depth-tree inference in browser"
+  ],
+  "limitations": "Responsive Chrome emulation is a layout check, not mobile hardware compatibility verification. UI screenshots were inspected in the tool but were not copied to the public repository because they include surrounding personal browser chrome."
+}

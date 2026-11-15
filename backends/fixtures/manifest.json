@@ -1,0 +1,125 @@
+{
+  "width": 128,
+  "height": 128,
+  "depth_type": "uint16 little-endian millimetres, row major",
+  "labels_type": "uint8, background7 unknown255",
+  "leafids_type": "uint16 little-endian heap indices;65535 for zero center",
+  "order": [
+    "historical_000",
+    "historical_001",
+    "historical_002",
+    "historical_003",
+    "historical_004",
+    "stress_dense"
+  ],
+  "fixtures": [
+    {
+      "id": "historical_000",
+      "kind": "historical recorded labeled example; chronological order not established",
+      "files": {
+        "depth10_leafids.bin": {
+          "bytes": 32768,
+          "sha256": "5f791d2e55fa62193e031c93be9cc48a4742edcaa301ee43e2909d648a2c36b9"
+        },
+        "depth.bin": {
+          "bytes": 32768,
+          "sha256": "21181c59964d329d365fc74d9a5927f356245c61580ff4809b043ec38628b2c9"
+        },
+        "depth10_labels.bin": {
+          "bytes": 16384,
+          "sha256": "63a789acfe66469fe7755d652060752bd66bf905666c540f508ab1d126bd3591"
+        }
+      }
+    },
+    {
+      "id": "historical_001",
+      "kind": "historical recorded labeled example; chronological order not established",
+      "files": {
+        "depth10_leafids.bin": {
+          "bytes": 32768,
+          "sha256": "98fd35f7f4f18b5fa21d29e10a9b3f27f2fa1c3c2b2c42a82244189db4233243"
+        },
+        "depth.bin": {
+          "bytes": 32768,
+          "sha256": "4a90124b68fb25a2d95ec6d42c11b0a66b90e40b1a046e27dd138734d4aa54aa"
+        },
+        "depth10_labels.bin": {
+          "bytes": 16384,
+          "sha256": "0027442b0fd974e2da8b79de699cf65eade2931c84704f24e4b76c960de31624"
+        }
+      }
+    },
+    {
+      "id": "historical_002",
+      "kind": "historical recorded labeled example; chronological order not established",
+      "files": {
+        "depth10_leafids.bin": {
+          "bytes": 32768,
+          "sha256": "d51f946fb1c00847d9727621d517e9a91010a3062a42415feb2cab9e5ce8e21c"
+        },
+        "depth.bin": {
+          "bytes": 32768,
+          "sha256": "33cde18d9ee74e4eea4a0b6c4441e4200fedc365060ab8a0c6fa6aa6b22e97cf"
+        },
+        "depth10_labels.bin": {
+          "bytes": 16384,
+          "sha256": "76eab0be7c9545cea54848e7b76e6b61b68e72091a8e18749ab1ef9edd0d3acc"
+        }
+      }
+    },
+    {
+      "id": "historical_003",
+      "kind": "historical recorded labeled example; chronological order not established",
+      "files": {
+        "depth10_leafids.bin": {
+          "bytes": 32768,
+          "sha256": "9c18db7d29d8f45a101860705127280f29f3bda9a286fcaaa912b0561f9e1903"
+        },
+        "depth.bin": {
+          "bytes": 32768,
+          "sha256": "f7fd5645e7b1fd336cf3df010a580169029cc2b597c7bae6028e263faaf3bd8a"
+        },
+        "depth10_labels.bin": {
+          "bytes": 16384,
+          "sha256": "17f770db5af05546c12d2b949b81b7270cc951685a3cd5fc864e8642a124d72c"
+        }
+      }
+    },
+    {
+      "id": "historical_004",
+      "kind": "historical recorded labeled example; chronological order not established",
+      "files": {
+        "depth10_leafids.bin": {
+          "bytes": 32768,
+          "sha256": "f8db2fb5bb1cf7f388a03d39020882e47fbdc39ce08dedc05c69c6bcb74c6201"
+        },
+        "depth.bin": {
+          "bytes": 32768,
+          "sha256": "677420f328aeda2421ff4f8a6172c9d44b9ff0603588218433b31614a7933c63"
+        },
+        "depth10_labels.bin": {
+          "bytes": 16384,
+          "sha256": "fd95b2a721b4b174aadec6222e40501c55333e699c9828ec1a6806a2bcec495e"
+        }
+      }
+    },
+    {
+      "id": "stress_dense",
+      "kind": "synthetic dense stress",
+      "files": {
+        "depth10_leafids.bin": {
+          "bytes": 32768,
+          "sha256": "bd41be5ab3d48183646f18601448d9fc5beae4f31dcc0eec082824e6e429ef74"
+        },
+        "depth.bin": {
+          "bytes": 32768,
+          "sha256": "ec4933ab8ee1d7dc43d74cceef965aeb3557c632a18ac1c2e22a00fc04582315"
+        },
+        "depth10_labels.bin": {
+          "bytes": 16384,
+          "sha256": "236db222ada6d8e80790fde751fa7784b12bebbc8dc5093f26f3427cd8e9723b"
+        }
+      }
+    }
+  ]
+}

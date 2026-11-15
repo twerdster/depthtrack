@@ -1,0 +1,9 @@
+# Backend source, data and vendor notices
+
+The recovered model/evaluator behavior originates in Aaron Wetzler's historical HandPlugin research. The current CPU/Python/Metal/Verilog adapters and test wrappers were produced during the2026 restoration/package work. No licence notice was found accompanying the recovered trained model sections or recorded fixtures; this package does not invent one or assert rights beyond those separately granted by the owner. Preserve this provenance and resolve redistribution permissions for historical artifacts in the repository's overall licensing policy. No training provenance connecting these records to HandNet has been established.
+
+The manufacturer UART/SPI/CCLK RTL and pin constraints under `fpga/vendor/mojo-base-project/` originate in Embedded Micro's Mojo base project. Its exact2015 MIT licence is retained as `fpga/vendor/mojo-base-project/LICENSE.txt`. The local AVR bridge is derived from that project's `avr_interface.v`; its copyright comment and an exact additional copy at `fpga/board/LICENSE-EmbeddedMicro.txt` are retained. Manufacturer programming protocol is described by the loader adapter; manufacturer loader/Arduino source or binaries are not included here.
+
+No Xilinx/AMD ISE toolchain, device database, vendor licence credential, operating-system package or compiled host executable is included. `fpga/images/mojo_depth10_50mhz.bin` is the340,884B generated design image from the reviewed prior ISE14.7 build. It is identified by SHA256 in the evidence and is explicitly programmed into volatile FPGA RAM only if the user invokes the loader.
+
+The generated image incorporates the included manufacturer-derived RTL, so keep the associated MIT notices with image redistributions. The repository's own code licensing decision remains separate from the historical model/data rights and vendor MIT terms.

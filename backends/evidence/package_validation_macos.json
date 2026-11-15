@@ -1,0 +1,86 @@
+{
+  "schema": "depthtrack-package-backends-validation-v1",
+  "date": "2026-11-15",
+  "passed": true,
+  "host_system": "macOS",
+  "host_machine": "arm64",
+  "execution": "Actual packaged sources; numerical validation, not a new controlled performance benchmark",
+  "physical_board_access": false,
+  "large_external_models_or_old_project_used_at_runtime": false,
+  "cpu": {
+    "passed": true,
+    "variants": [
+      "literal_float32",
+      "integer_raw_cut"
+    ],
+    "pixels_per_variant": 98304,
+    "labels_and_heap_indices": true,
+    "reusable_header_file_cli": {
+      "passed": true,
+      "pixels": 98304,
+      "labels_and_heap_traces": true
+    },
+    "compiler": "Apple clang version 16.0.0 (clang-1600.0.26.4)",
+    "flags": [
+      "-std=c++17",
+      "-O3",
+      "-ffp-contract=off",
+      "-fno-fast-math"
+    ]
+  },
+  "metal": {
+    "passed": true,
+    "device": "Apple M3 Max",
+    "cpu_fallback": false,
+    "pixels": 98304,
+    "report_sha256": "94e514f1a2b95d956e36d8cc0a09dc4899ccb6910d289cb147c959a79e7bce49",
+    "execution": "Actual Metal device, untimed labels+heap check and12 single-frame stability samples; packaging sanity check, not a controlled benchmark"
+  },
+  "rtl": {
+    "passed": true,
+    "fixtures": 6,
+    "pixels": 98304,
+    "valid_leaf_paths": 26749,
+    "cycles": [
+      67125,
+      66832,
+      134373,
+      82109,
+      61711,
+      422009
+    ],
+    "transport_stub_packets": 252,
+    "transport_realcore_packets": 247,
+    "control_cases": 11,
+    "uart_response_packets": 14,
+    "uart_response_crc_checked_by_production_codec": true,
+    "no_synthesis_or_hardware_claim": true
+  },
+  "host_tests": {
+    "passed": true,
+    "tests": 25,
+    "serial_port_access": false
+  },
+  "loader_tests": {
+    "passed": true,
+    "tests": 9,
+    "serial_port_access": false
+  },
+  "commands": [
+    "python3 backends/validate.py --cpu",
+    "python3 backends/validate.py --metal",
+    "python3 -m unittest discover -s backends/fpga/host -p 'test_*.py'",
+    "python3 -m unittest discover -s backends/fpga/board -p 'test_*.py'",
+    "python3 backends/fpga/sim/run.py --all-fixtures --uart"
+  ],
+  "raw_report_sha256": {
+    "cpu": "94f61e1c17951a4b917351b66d59c8782d53c9b6817602a924233d13dfd87e8d",
+    "metal": "94e514f1a2b95d956e36d8cc0a09dc4899ccb6910d289cb147c959a79e7bce49",
+    "rtl": "22ad8b3ea278e483104ab22bb52b6a5931c8b7038a2ff180be851488e7a530f4"
+  },
+  "limits": [
+    "Prior physical labels/image are preserved evidence, not a new physical run.",
+    "Package GPU samples only check stability; original comparison timing is separately preserved.",
+    "Fixture equivalence does not establish recognition accuracy or full-depth original-model equivalence on arbitrary inputs."
+  ]
+}

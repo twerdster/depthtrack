@@ -1,0 +1,9 @@
+legacy/zscan/** -text
+backends/fpga/rtl/** -text
+backends/fpga/vendor/** -text
+*.bin binary
+*.u16 binary
+*.u8 binary
+*.gz binary
+*.png binary
+*.gif binary

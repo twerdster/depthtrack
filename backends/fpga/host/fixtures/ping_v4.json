@@ -1,0 +1,10 @@
+{
+  "description": "Frozen protocol-v4 PING wire fixtures: 128x128, capacity 16384, caps=1. CRC independently calculated with Python binascii.crc_hqx(body, 65535), transmitted LE. Contract fixtures, not physical captures.",
+  "request_hex": "a5010000acfb",
+  "replies": [
+    {"max_levels": 4, "node_count": 0, "leaf_count": 0, "reply_hex": "5a81000f000400800080000040000000000401a699"},
+    {"max_levels": 5, "node_count": 0, "leaf_count": 0, "reply_hex": "5a81000f00040080008000004000000000050197aa"},
+    {"max_levels": 10, "node_count": 0, "leaf_count": 0, "reply_hex": "5a81000f000400800080000040000000000a01a9ba"},
+    {"max_levels": 10, "node_count": 1023, "leaf_count": 1024, "reply_hex": "5a81000f000400800080000040ff0300040a0104dc"}
+  ]
+}

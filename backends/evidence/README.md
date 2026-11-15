@@ -1,0 +1,9 @@
+# Prior execution and package verification
+
+`prior_baseline.json` is a sanitized numerical extract from the actual2026-11-14 comparison, with the original report's SHA256. The six preserved physical label outputs are under `physical_labels/`; current fixture validation checks them byte-for-byte. `fpga_integrity.json` confirms that all included synthesis RTL/vendor helpers/constraints, build script and340,884B design image exactly match the reviewed source snapshot. Images summarize that prior prepared-frame comparison.
+
+Prior dense input: CPU literal2.559375ms, CPU integer1.125ms, Metal device0.038ms/host0.209396ms, physical Mojo422,009cycles=8.44018ms at nominal50MHz. Current serial transport adds roughly16.38s per prepared frame. Device and host timings are different scopes; see the report's exclusions/sample counts. Recorded sparse examples stay separate from the dense synthetic case. No power, multicore CPU, live-capture or anatomical-accuracy result is claimed.
+
+`package_validation_macos.json` records actual2026-11-15 execution from this package: scalar reference, both compiled CPU variants, reusable C++ file interface, actual Metal GPU, all six complete RTL fixtures/leaf paths, CRC/guards, UART and in-memory host/loader tests. Packaging did not invoke ISE, camera capture or hardware programming. Raw local logs/executables stay in ignored `_build/`; public evidence contains relative source paths, hashes and scoped results only.
+
+The original historical model oracle checked full fixture outputs before packaging. Its large private source path/file is excluded. Current literal CPU validation reads the included bounded original nodes/histograms, and integer/GPU/RTL validate against the same unchanged fixture expectations. Equality among implementations is not recognition accuracy. The complete ten-split prefix is not the original full depth21 tree or the separate full-depth two/nine-class tracking detector.

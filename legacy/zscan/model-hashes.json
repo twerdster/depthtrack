@@ -1,0 +1,53 @@
+{
+  "models": [
+    {
+      "role": "foreground_hand",
+      "bytes": 184549358,
+      "mtime_utc": "2013-07-16T01:26:37+00:00",
+      "sha256": "cee7f3d916386ee586d509f27762e0950e65019e517d06f2e228cc4afe854e25",
+      "header": {
+        "depth": 21,
+        "num_classes": 2,
+        "total_nodes": 4194303,
+        "total_hists": 8388607
+      },
+      "expected_size": 184549358,
+      "size_matches_source_layout": true,
+      "offsets": {
+        "header": 0,
+        "nodes": 16,
+        "compact": 100663288,
+        "histograms": 167772144
+      },
+      "source_loader": "ZSHand/Forest.h loadTree + Ensemble::LoadEnsemble",
+      "one_tree_in_directory": true,
+      "file": "HandClassifier/Tree_0000.tree"
+    },
+    {
+      "role": "fingertip_parts",
+      "bytes": 243269607,
+      "mtime_utc": "2013-07-19T04:38:21+00:00",
+      "sha256": "6dfe3278bd42fb1f95b0fc867b053cc98ecc9be91a30a62aa91008d75f7716c9",
+      "header": {
+        "depth": 21,
+        "num_classes": 9,
+        "total_nodes": 4194303,
+        "total_hists": 8388607
+      },
+      "expected_size": 243269607,
+      "size_matches_source_layout": true,
+      "offsets": {
+        "header": 0,
+        "nodes": 16,
+        "compact": 100663288,
+        "histograms": 167772144
+      },
+      "source_loader": "ZSHand/Forest.h loadTree + Ensemble::LoadEnsemble",
+      "one_tree_in_directory": true,
+      "file": "TipCLassifier/Tree_0000.tree"
+    }
+  ],
+  "source_modified": false,
+  "models_copied": false,
+  "hardware_or_account_access": false
+}

@@ -1,0 +1,71 @@
+{
+  "passed": true,
+  "physical_execution": "Prior2026-11-14 only; no packaging hardware access",
+  "files": [
+    {
+      "file": "fpga/rtl/tree_protocol.v",
+      "sha256": "2555d65210cb1e1fb4fd336ed46845ef288438f1c4156787dfa60cd90c7345e4",
+      "same_as_prior_build_source": true
+    },
+    {
+      "file": "fpga/rtl/thesis_coord_pipe.v",
+      "sha256": "cab692c09264619082bcb026fd9c12beb723afbafa3664e73bc14de5f5685055",
+      "same_as_prior_build_source": true
+    },
+    {
+      "file": "fpga/rtl/thesis_reciprocal.v",
+      "sha256": "9dbc431a3009c7c8a8bae76b85caae32b4c4bd7175906b0ad9fc08f8fc490574",
+      "same_as_prior_build_source": true
+    },
+    {
+      "file": "fpga/rtl/thesis_tree_core.v",
+      "sha256": "3af1bccc61e0bb4329507f80768209ad57b2ad1f652fe33b314dc87ad4dd6514",
+      "same_as_prior_build_source": true
+    },
+    {
+      "file": "fpga/rtl/mojo_top.v",
+      "sha256": "c6b08ad0cfb2632219e4f5e1c302730357c283b9d247f296cd22635fa08ba7e0",
+      "same_as_prior_build_source": true
+    },
+    {
+      "file": "fpga/vendor/mojo-base-project/src/cclk_detector.v",
+      "sha256": "97f00c59cd8f0e271d717607e755558b38208486786bfa5bd078939ee96438d7",
+      "same_as_prior_build_source": true
+    },
+    {
+      "file": "fpga/vendor/mojo-base-project/src/spi_slave.v",
+      "sha256": "23dcdc85f07f97e12d9481107ffb1f1dfd54c06b91d7733c7897f594049c4ad9",
+      "same_as_prior_build_source": true
+    },
+    {
+      "file": "fpga/vendor/mojo-base-project/src/serial_rx.v",
+      "sha256": "02c8d2e5bf2a15f49ab5267411a557c870d4a6da2dd6a8d31ff790089b3a9b56",
+      "same_as_prior_build_source": true
+    },
+    {
+      "file": "fpga/vendor/mojo-base-project/src/mojo.ucf",
+      "sha256": "dbe1147337db8f8f1f8ec06621825f12566bde7a411859a8c189dfa41af015c9",
+      "same_as_prior_build_source": true
+    },
+    {
+      "file": "fpga/vendor/mojo-base-project/src/serial_tx.v",
+      "sha256": "4851ee6096e914e60de8e0685fec904bdeb4af649ce001c85aff64dd23039252",
+      "same_as_prior_build_source": true
+    },
+    {
+      "file": "fpga/board/depth_tree_avr_bridge.v",
+      "sha256": "f4fcda4349b229cbc36ced39f9c6196ea7332e41e3ed7fce69a61370b0edd2c7",
+      "same_as_prior_build_source": true
+    },
+    {
+      "file": "fpga/board/build_ise.tcl",
+      "sha256": "9f0fb667c9f319962386329b7a0e17676df0dfb5c25940080c3f3e9cb01d183b",
+      "same_as_prior_build_source": true
+    },
+    {
+      "file": "fpga/images/mojo_depth10_50mhz.bin",
+      "sha256": "ea23c4e4bf2cbde3a8e76b9678ddfef90315428adec3bf0e1992c1a998929c0f",
+      "same_as_prior_build_source": true
+    }
+  ]
+}

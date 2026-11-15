@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d151c">
+  <meta name="description" content="Replay real recorded depth and compare temporal finger tracking. The causal tracker runs in your browser.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230d151c'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%2387e5c7' stroke-width='3' stroke-dasharray='2 2'/%3E%3C/svg%3E">
+  <title>DepthTrack · recorded depth, real tracking</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header class="site-header wrap">
+    <a class="wordmark" href="./" aria-label="DepthTrack home"><span class="brand-mark" aria-hidden="true">◌</span> DepthTrack</a>
+    <span class="header-note">Depth → detections → motion</span>
+  </header>
+  <main class="wrap">
+    <section class="intro">
+      <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> Recorded sequence · browser computation</p>
+      <h1>Follow the motion.</h1>
+      <p class="lede">Real recorded depth. The same five finger detections. Compare the recovered tracker with a timestamp-aware filter running right here.</p>
+    </section>
+
+    <section class="player" aria-label="Recorded depth player" aria-busy="true" id="player">
+      <div class="player-top">
+        <div class="clip-title"><strong>HandMeshRecord</strong><span id="clip-meta">Loading local sequence…</span></div>
+        <div class="segmented" role="group" aria-label="Tracking view">
+          <button type="button" data-view="improved" aria-pressed="true">New tracker</button>
+          <button type="button" data-view="baseline" aria-pressed="false">Original</button>
+          <button type="button" data-view="compare" aria-pressed="false">Compare</button>
+        </div>
+      </div>
+
+      <div class="error-box" id="error" hidden role="alert"></div>
+      <div class="viewports" id="viewports" data-view="improved">
+        <figure class="viewport" id="baseline-panel" hidden>
+          <figcaption><span>Original tracker <small>recovered output</small></span><span class="fresh-count" id="baseline-count">—</span></figcaption>
+          <canvas id="baseline-canvas" width="640" height="480" role="img" aria-label="Original tracker over recorded depth"></canvas>
+        </figure>
+        <figure class="viewport" id="improved-panel">
+          <figcaption><span>New tracker <small>computed in JavaScript</small></span><span class="fresh-count" id="improved-count">—</span></figcaption>
+          <canvas id="improved-canvas" width="640" height="480" role="img" aria-label="New tracker over recorded depth"></canvas>
+        </figure>
+      </div>
+
+      <div class="loading" id="loading">Loading depth frames and preparing the causal tracker…</div>
+      <div class="transport">
+        <div class="timeline-heading"><span id="frame-label">Frame — / —</span><output id="time-label" for="scrub">0.00 s</output></div>
+        <label class="sr-only" for="scrub">Recorded frame</label>
+        <input type="range" id="scrub" min="0" max="0" value="0" step="1" disabled>
+        <div class="control-row">
+          <div class="playback-buttons">
+            <button type="button" class="play primary" id="play" disabled aria-label="Play recorded sequence"><span aria-hidden="true">▶</span> Play</button>
+            <button type="button" id="previous" class="step" disabled aria-label="Previous frame">←</button>
+            <button type="button" id="next" class="step" disabled aria-label="Next frame">→</button>
+          </div>
+          <div class="playback-options">
+            <label class="speed-label" for="speed">Speed <select id="speed"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label>
+            <label class="checkbox"><input type="checkbox" id="show-trails" checked> Trails</label>
+            <label class="checkbox"><input type="checkbox" id="show-raw" checked> Detections</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="legend" aria-label="Fingertip colors">
+        <span style="--finger:#ff6868">Thumb</span><span style="--finger:#ffcb4d">Index</span><span style="--finger:#46db8c">Middle</span><span style="--finger:#48bfff">Ring</span><span style="--finger:#c280ff">Pinky</span>
+      </div>
+      <div class="key"><span><b aria-hidden="true">+</b> detector mode</span><span><b aria-hidden="true">○</b> filtered position</span><span><b class="held-symbol" aria-hidden="true">◎</b> held / unmatched</span><span>0.65 s trails · zero depth is black</span></div>
+    </section>
+
+    <section class="readout" aria-labelledby="state-heading">
+      <div class="section-heading"><h2 id="state-heading">New tracker state</h2><span id="computation-label">JavaScript tracker</span></div>
+      <div class="finger-states" id="finger-states"></div>
+      <p class="state-explanation">A fresh output accepts the current detection. A held output is visibly marked; lost points disappear. Tracking does not establish that a detection is anatomically correct.</p>
+    </section>
+
+    <section class="notes-grid">
+      <article class="note"><span class="note-number">01 / INPUT</span><h2>Real depth, recorded earlier.</h2><p>130 chronological 320 × 240 depth frames, spanning 17.58 seconds. Detections were computed offline from recovered depth-tree models. Magnetic sensor positions do not enter this replay.</p></article>
+      <article class="note"><span class="note-number">02 / COMPUTATION</span><h2>The new tracker runs here.</h2><p>JavaScript consumes raw XYZ detections and camera timestamps in order. States are prepared causally on load for responsive scrubbing. Each update uses only the observations available at that time.</p></article>
+      <article class="note"><span class="note-number">03 / LIMITS</span><h2>Consistency, not accuracy.</h2><p>This is recorded playback, not live capture or FPGA execution. Calibration remains a source-supported assumption. The recovered model’s connection to HandNet training is unverified.</p></article>
+    </section>
+    <details class="technical"><summary>Data, tracker and local use</summary><div><p>The new implementation is a speed-adaptive vector 1€ filter with an explicit missing-observation and jump lifecycle. The original pane uses saved output from Aaron Wetzler’s recovered temporal tracker. Both show identical detector modes, timestamps, projection and trail duration.</p><p>All assets are local to this page. Once loaded, replay needs no network requests. No camera access, analytics, external scripts or fonts. Serve this folder over HTTP; see <a href="./README.md">the viewer README</a> for Mac, Linux and phone instructions.</p><p><a href="./data/sequence.json" download>Download replay data</a> · <a href="./tracker.mjs" download>JavaScript tracker</a></p></div></details>
+    <p class="footer">DepthTrack · Aaron Wetzler’s recovered research, with an explicitly separate portable tracker.</p>
+    <p class="sr-only" id="announcement" aria-live="polite"></p>
+    <noscript><div class="error-box">This recorded viewer needs JavaScript to run the tracker. You can still <a href="./data/sequence.json">read the replay data</a> or <a href="./data/depth-atlas.png">open the recorded depth atlas</a>.</div></noscript>
+  </main>
+  <script type="module" src="./app.mjs"></script>
+  <script>
+    // Keep module-loading failures visible even when the application never starts.
+    setTimeout(function () {
+      if (document.documentElement.dataset.appState) return;
+      var error = document.getElementById('error');
+      error.hidden = false;
+      error.textContent = 'The viewer could not start. Serve the complete web folder over HTTP, including its JavaScript and data files, then reload.';
+      document.getElementById('loading').hidden = true;
+      document.getElementById('player').setAttribute('aria-busy', 'false');
+    }, 20000);
+  </script>
+</body>
+</html>

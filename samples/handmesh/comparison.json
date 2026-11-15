@@ -1,0 +1,98 @@
+{
+  "frames": 130,
+  "recorded_span_s": 17.583466,
+  "expected_finger_frames": 650,
+  "detector_observations": 635,
+  "original_mature_outputs": 477,
+  "original_fresh_outputs": 373,
+  "improved_visible_outputs": 635,
+  "improved_accepted_outputs": 634,
+  "improved_held_outputs": 1,
+  "original_distance_to_current_detection_mm": {
+    "count": 477,
+    "median": 11.477697585487238,
+    "mean": 30.64354854970283,
+    "p95": 116.82453291947449,
+    "max": 190.94946018332797
+  },
+  "original_fresh_distance_to_current_detection_mm": {
+    "count": 373,
+    "median": 8.527561965296494,
+    "mean": 11.523766394676858,
+    "p95": 28.941132548903788,
+    "max": 36.78073062445454
+  },
+  "improved_distance_to_current_detection_mm": {
+    "count": 635,
+    "median": 4.897679551701899,
+    "mean": 6.369729517708281,
+    "p95": 14.35014339345834,
+    "max": 159.38050825252807
+  },
+  "common_frames_original_distance_mm": {
+    "count": 477,
+    "median": 11.477697585487238,
+    "mean": 30.64354854970283,
+    "p95": 116.82453291947449,
+    "max": 190.94946018332797
+  },
+  "common_frames_improved_distance_mm": {
+    "count": 477,
+    "median": 5.967041357963657,
+    "mean": 6.9626862392309326,
+    "p95": 15.37445080313755,
+    "max": 159.38050825252807
+  },
+  "baseline_fresh_frames_improved_distance_mm": {
+    "count": 373,
+    "median": 4.390437623087853,
+    "mean": 5.488436346456051,
+    "p95": 11.857087144128766,
+    "max": 20.241600282200483
+  },
+  "per_class": [
+    {
+      "name": "Thumb",
+      "detections": 127,
+      "original_mature": 80,
+      "original_fresh": 48,
+      "improved_accepted": 126
+    },
+    {
+      "name": "Index",
+      "detections": 127,
+      "original_mature": 108,
+      "original_fresh": 96,
+      "improved_accepted": 127
+    },
+    {
+      "name": "Middle",
+      "detections": 127,
+      "original_mature": 113,
+      "original_fresh": 99,
+      "improved_accepted": 127
+    },
+    {
+      "name": "Ring",
+      "detections": 127,
+      "original_mature": 108,
+      "original_fresh": 95,
+      "improved_accepted": 127
+    },
+    {
+      "name": "Pinky",
+      "detections": 127,
+      "original_mature": 68,
+      "original_fresh": 35,
+      "improved_accepted": 127
+    }
+  ],
+  "metric_limit": "Distance to the same noisy detector observations; not anatomical ground-truth accuracy or measured latency.",
+  "source": {
+    "original_tracks_sha256": "4948daa07a3e2c022444ae85ec63d2d403b3cb83480bcc454e46f15ba3b6bda6",
+    "input_depth_sha256": "eae21f0a8da80edc96cd55468a5cd634dc9746415b50995f56640c3675816317",
+    "timestamp_sha256": "d35af773d2cda5d22b3a31fc904d03e250e8d394631db0c26d5a04ee2a173881",
+    "tracker_code_sha256": "f6dc51f113add45741517192a068043f986406495eb2a07953910458d1f1bfbc"
+  },
+  "note": "Historical recorded CPU tracker comparison; training-set identity and split independence unverified; per-machine microtimings omitted."
+}
