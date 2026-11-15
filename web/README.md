@@ -91,3 +91,9 @@ Linux graphical browsers. Those remain manual integration checks.
 
 Source orientation used root `SUMMARY.md`, then root `SKILL.md`; no dependencies
 were downloaded, device permissions changed, or live camera/serial opened.
+
+## Live monocular experiment
+
+The separate `/live/` page uses button-triggered camera/photo input, a pinned Depth Anything V2 Small model in a worker, approximate two-anchor inverse-depth calibration, the exact compact ten-split tree, and shared temporal tracking. It needs network access for runtime/model downloads and HTTPS/localhost for camera access. See [setup and interpretation](../docs/monocular-live.md). The recorded replay above remains independent of these dependencies.
+
+Run all browser tests: `node --test web/tests/*.test.mjs web/live/tests/*.test.mjs`. Physical phone performance is unverified; the live page reports actual local inference time.

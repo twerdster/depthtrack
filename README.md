@@ -2,17 +2,18 @@
 
 Portable depth-tree inference and responsive 3D point tracking, with a recorded hand demo, CPU/Metal/Mojo backends, and a small C API for mobile apps.
 
-**[Open the browser demo](https://twerdster.github.io/depthtrack/)** · [Recorded outputs](docs/results.md) · [Native/mobile guide](docs/native-platforms.md) · [Inference backends](backends/README.md)
+**[Open the recorded demo](https://twerdster.github.io/depthtrack/)** · **[Try live monocular depth](https://twerdster.github.io/depthtrack/live/)** · [Recorded outputs](docs/results.md) · [Native/mobile guide](docs/native-platforms.md) · [Inference backends](backends/README.md)
 
 ![Recorded depth-image tracking on Mac CPU](docs/media/improved_tracking_phone.gif)
 
-The demo contains130 real recorded depth frames spanning17.6s. Crosses are learned fingertip detections; circles and trails are the new tracker. The browser actually computes the causal tracker from the recorded observations. It does not run a neural network or capture a camera. [Compare the original and improved output](docs/media/comparison_frame_066.png).
+The demo contains130 real recorded depth frames spanning17.6s. Crosses are learned fingertip detections; circles and trails are the new tracker. The browser actually computes the causal tracker from the recorded observations. The separate [live monocular experiment](docs/monocular-live.md) estimates depth from your webcam/phone camera, calibrates an approximate scale, then executes the same compact ten-split tree and tracker locally. That experiment is distinct from this sensor-depth recording. [Compare the original and improved output](docs/media/comparison_frame_066.png).
 
 ## What is included
 
 - A dependency-free C++17 tracking core with C ABI, a NumPy reference and matching JavaScript implementation. They use timestamps in seconds and XYZ in millimetres; missing, held and lost states remain explicit.
 - Self-contained seven-class ten-split depth-tree inference on C++ CPU, macOS Metal and Mojo V3/Spartan-6, including the compact model, six numerical fixtures, RTL, transport, reviewed bitstream and actual result evidence.
 - A separate optional OpenCV restoration of the full-depth historical ZScanV02 hand/fingertip detector, plus the original tracking baseline. Its two large archived models remain external.
+- An experimental local browser camera pipeline: Depth Anything V2 Small at294², two-anchor inverse-depth calibration, range/centre masks, exact128² tree inference and candidate-region tracking. [Setup, limits and tests](docs/monocular-live.md).
 - Native Swift and Kotlin/JNI integration examples, a phone-friendly static viewer, lossless numeric sample depth, and recorded tracking outputs. No camera SDK, proprietary compiler installer or account is required for sample replay.
 
 The tracker is generic per-point code: five fixed fingertip classes are the sample application. Supply observations from another calibrated detector or sensor to track other semantic3D points.
@@ -66,7 +67,7 @@ state = tracker.update(0.13, None)  # held/lost is distinguished from a measurem
 python3 -m http.server 8000 --directory web
 ```
 
-Open `http://localhost:8000`. For a phone on the same reachable LAN, serve with `--bind 0.0.0.0` and use the host's LAN address, or use the [hosted HTTPS demo](https://twerdster.github.io/depthtrack/). No account, Tailscale, camera permission or CDN is needed. Play/pause, scrub the real timestamps, and switch between original, improved and comparison views. Serving is required; `file://` cannot fetch the JSON/modules reliably. See [viewer guide](web/README.md).
+Open `http://localhost:8000`. For a phone on the same reachable LAN, serve with `--bind 0.0.0.0` and use the host's LAN address, or use the [hosted HTTPS demo](https://twerdster.github.io/depthtrack/). The recorded replay needs no account, Tailscale, camera permission or CDN. The separate [live experiment](https://twerdster.github.io/depthtrack/live/) requests camera permission and downloads its pinned neural runtime/model. Play/pause, scrub the real timestamps, and switch between original, improved and comparison views. Serving is required; `file://` cannot fetch the JSON/modules reliably. See [viewer guide](web/README.md).
 
 For native builds, follow the exact [iOS CMake/Swift](docs/native-platforms.md#apple-platforms) and [Android NDK/JNI](docs/native-platforms.md#android-ndk-and-jni) commands. The device must supply calibrated XYZ observations in millimetres and a monotonic clock in seconds. Camera capture/depth backprojection is a separate adapter; an ordinary RGB frame is not a metric depth frame.
 
@@ -95,7 +96,7 @@ The old model training dataset and its relationship to **HandNet** are **unverif
 
 ```sh
 python tests/python/test_tracker.py
-node --test web/tests/*.test.mjs
+node --test web/tests/*.test.mjs web/live/tests/*.test.mjs
 python3 tools/unpack_sample.py --output out/depth.u16
 ```
 
