@@ -8,13 +8,15 @@ Scope: dependency-free C++17/C ABI tracking core, NumPy and JavaScript reference
 
 - Macarm64 and Linuxx86-64: native lifecycle/C-header tests and650 full-state/history golden checks pass; all six CPU inference fixtures match labels/heaps,98,304pixels per variant.
 - MacMetal: actual GPU matches six fixtures; no CPU fallback. FPGA package: all six core fixtures, CRC/transport/UART/control tests and host/loader tests pass in simulation/memory. Preserved physical50MHz Mojo result/image evidence is historical; no board was accessed for packaging.
-- iOSdevice and simulatorarm64 static libraries cross-compile with Xcode16.1/SDK18.1; Swift wrapper type-checks. Native Android build is configured for CI; neither mobile platform has an executed device app or capture pipeline.
+- iOSdevice and simulatorarm64 static libraries cross-compile with Xcode16.1/SDK18.1; Swift wrapper type-checks. Androidarm64/API24 JNI shared library cross-compiled successfully in clean-checkoutCI; neither mobile platform has an executed device app or capture pipeline.
 - JavaScript:650 recorded states plus separate failure/motion cases,11tests pass. Browser play/pause/scrub/comparison and390×844responsive layout checked in desktopChrome. No physical mobile-browser execution is claimed.
 - Optional OpenCV4 historical full-detector target compiles onMac. Its large original models remain external; the portable replay uses the bundled lossless sample and saved detector observations.
 
 ## Run and maintenance
 
-Read README.md for per-platform commands. `cmake -S . -B build/native` builds the portable core. `python -m depthtrack replay samples/handmesh/tracking_fixture.json --verify` reproduces saved states after package installation. `node --test web/tests/*.test.mjs` checks browser parity. `python3 backends/validate.py --cpu --metal` checks actual desktop inference; drop`--metal` onLinux. Webroot is`web/`; GitHubPages deployment is configured after desktop/Android CI checks.
+Read README.md for per-platform commands. `cmake -S . -B build/native` builds the portable core. `python -m depthtrack replay samples/handmesh/tracking_fixture.json --verify` reproduces saved states after package installation. `node --test web/tests/*.test.mjs` checks browser parity. `python3 backends/validate.py --cpu --metal` checks actual desktop inference; drop`--metal` onLinux. Webroot is`web/`; GitHubPages deploys after desktop/Android CI checks.
+
+Clean-checkout CI run43712008750 passed alljobs on sourcecommitb3b17e6219a93f0d915cb67565e710ee8278eda3, including Mac/Linux native/CPU, JS/Python, LinuxRTL, iOScross-builds and AndroidJNI. The run deployed https://twerdster.github.io/depthtrack/ (HTTP200 verified). Public code: https://github.com/twerdster/depthtrack. Exact job URLs/evidence scope are in docs/validation-ci.json; later documentation commits may have newer CI runs without changing the checked source bytes.
 
 The130-frame HandMeshRecord demo contains635 learned observations;634 are accepted and one jump is explicitly held. Common-frame P95 separation from the same noisy detections improves116.82→15.37mm, or28.94→11.86mm on originally fresh matches. These are not anatomical accuracy or measured latency. Sample/model training-set membership and independence are unknown. The seven-class ten-split FPGA prefix differs from the full-depth two/nine-class detector used for recording.
 

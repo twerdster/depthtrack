@@ -1,6 +1,6 @@
-# Android integration fragments — untested
+# Android integration fragments
 
-This is a Kotlin/JNI example, not a complete Gradle application. No NDK or Android device build was run during packaging. It consumes already inferred XYZ points and does not provide camera capture or model inference.
+This is a Kotlin/JNI example, not a complete Gradle application. The CMake/JNIarm64 shared library cross-compiled in the [clean-checkout CI run](https://github.com/twerdster/depthtrack/actions/runs/43712008750). No Kotlin application or Android device runtime was executed, and no NDK was installed locally. It consumes already inferred XYZ points and does not provide camera capture or model inference.
 
 Copy/adapt the Kotlin class and point your app's `externalNativeBuild.cmake.path` to `app/src/main/cpp/CMakeLists.txt`. Keep the package/class and JNI symbol names synchronized. Android Gradle supplies the NDK toolchain and ABI; select ABIs with `ndk.abiFilters`. Serialize updates and call `close()`/`use` to release the handle. The wrapper uses millimetres, seconds and nullable observations.
 

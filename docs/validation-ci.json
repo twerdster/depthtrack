@@ -1,0 +1,28 @@
+{
+  "date": "2026-11-15",
+  "source_commit": "b3b17e6219a93f0d915cb67565e710ee8278eda3",
+  "workflow_run": "https://github.com/twerdster/depthtrack/actions/runs/43712008750",
+  "conclusion": "success",
+  "jobs": {
+    "macos": "https://github.com/twerdster/depthtrack/actions/runs/43712008750/job/132805418081",
+    "android_jni_arm64": "https://github.com/twerdster/depthtrack/actions/runs/43712008750/job/132805418272",
+    "linux": "https://github.com/twerdster/depthtrack/actions/runs/43712008750/job/132805418484",
+    "pages": "https://github.com/twerdster/depthtrack/actions/runs/43712008750/job/132805795011"
+  },
+  "scope": {
+    "native_tracking_and_golden_states": true,
+    "python_and_javascript_parity": true,
+    "packaged_cpu_inference": true,
+    "linux_fpga_simulation": true,
+    "ios_device_and_simulator_static_cross_builds": true,
+    "android_jni_arm64_api24_cross_build": true,
+    "mobile_device_or_app_execution": false,
+    "kotlin_application_build": false,
+    "physical_fpga_access_in_ci": false,
+    "metal_gpu_execution_in_ci": false,
+    "metal_gpu_local_execution": true,
+    "public_pages_http_200": true
+  },
+  "demo_url": "https://twerdster.github.io/depthtrack/",
+  "note": "Cross-compilation and recorded tracker/backend checks do not establish mobile device runtime, live capture or anatomical accuracy. Historical physical FPGA evidence is preserved separately."
+}

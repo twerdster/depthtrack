@@ -9,11 +9,12 @@ Packaging checks on November 15, 2026:
 | Target | Evidence | Limit |
 | --- | --- | --- |
 | macOS arm64 | Release library/CSV executable built; native unit tests, C-only header client, 650 CSV states and 650 full JSON states/history match Python within 1e-8 | Desktop execution |
+| Linux x86-64 | GCC11.4 native unit/C-header/650-state checks and packaged CPU inference executed; clean-checkout Ubuntu CI also passed | Desktop execution, not mobile |
 | iOS arm64 | Static library cross-compiled with Xcode 16.1, iPhoneOS SDK 18.1, minimum iOS 15.0; Swift wrapper type-checked | No device execution or signed application |
 | iOS Simulator arm64 | Static library cross-compiled with Simulator SDK 18.1; Swift wrapper type-checked | No simulator application executed |
-| Android | CMake, Kotlin and JNI integration fragments supplied | No local NDK build, Kotlin application build or device execution |
+| Android arm64-v8a/API24 | CMake/JNI shared library cross-compiled successfully in GitHub CI | No local NDK installation, Kotlin application build or device execution |
 
-`tests/native/platform-validation.json` records local artifact/source hashes and commands. Build trees/binaries are generated outputs, not required source dependencies. Linux execution evidence is maintained by the repository integration workflow.
+`tests/native/platform-validation.json` records local artifact/source hashes and commands. `docs/validation-ci.json` records the successful clean-checkout Mac/Linux/iOS/Android jobs and deployment. Build trees/binaries are generated outputs, not required source dependencies.
 
 ## Build and test on a desktop
 
@@ -73,4 +74,4 @@ cmake -S examples/android/app/src/main/cpp -B build/android-arm64 \
 cmake --build build/android-arm64 --parallel
 ```
 
-For Android Studio, point `externalNativeBuild.cmake.path` to that example CMake file and select ABIs through `ndk.abiFilters`; Gradle supplies the toolchain. The example links the portable static core into `depthtrack_jni`, and `DepthTracker.kt` releases its native handle through `close()`. It is an integration fragment, not a complete app. No NDK, camera permissions, SDK capture code or Android packages were installed by this packaging task. Successful CI cross-compilation would add build evidence, not device/runtime verification.
+For Android Studio, point `externalNativeBuild.cmake.path` to that example CMake file and select ABIs through `ndk.abiFilters`; Gradle supplies the toolchain. The example links the portable static core into `depthtrack_jni`, and `DepthTracker.kt` releases its native handle through `close()`. It is an integration fragment, not a complete app. No local NDK, camera permissions, SDK capture code or Android packages were installed for packaging. The arm64/API24 CMake/JNI build passed in the linked CI run; Kotlin/app/device/runtime verification remains unperformed.
