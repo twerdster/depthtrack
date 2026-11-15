@@ -13,4 +13,24 @@ Build/test commands are in README.md and docs/native-platforms.md. Before commit
 
 Native mobile builds are distinct from device execution and camera acquisition. The supplied Swift/JNI APIs consume XYZ observations; no complete mobile app or depth capture pipeline is bundled. Do not claim mobile runtime, live depth capture, model training, or a full tracker on FPGA without execution evidence. No board programming is needed for ordinary tests. Keep large archived models external and preserve existing component notices; do not silently assign HandNet training provenance or its dataset license to the historical recording.
 
+For new native Tea forests, follow `docs/tea-forest.md`. Build/test with the normal
+CMake commands; `tea_forest_contracts` verifies independent float32/heap parity,
+normalized tree voting, malformed/empty models, calibrated XYZ/tracker missing
+states and a complete 20-decision three-tree model. Preserve the manifest's
+coordinate precision, feature profile, class map and per-tree Coords.co. Do not
+substitute the historical 200/126 profile or 24-byte ZScan node format. Keep new
+deep CPU forest claims separate from the old ten-decision Metal/FPGA fixture.
+Observations require verified class IDs, actual camera intrinsics and actual
+strictly increasing timestamps. Default component thresholds need held-out tuning.
+For foreground experiments, distinguish independently generated `near-component`
+ROIs from caller-provided/oracle masks and learned background classes. ROI masks
+select queried centres only; preserve raw depth at all feature neighbors. Keep
+modeled background separate from invalid depth and unknown labels.
+
 Before publishing updates, check the clean-checkout CI jobs (Mac/Linux, iOS static builds, Android JNI build) and Pages deployment. Record the checked source commit/job URLs when platform status changes; preserve previous immutable evidence records. Public browser demo is https://twerdster.github.io/depthtrack/. HandNet integration uses a pinned submodule gitlink; coordinate its update after upstream changes and verify recursive checkout.
+
+Deployment postprocessing must match held-out model selection: largest
+4-connected confident component, weighted pixel XY/mean Z, then pinhole XYZ.
+Preserve optional manifest defaults and their method identifier; explicit CLI
+overrides change the operating point and must be reported. Run
+`tea_observation_components` as well as `tea_forest_contracts` for native parity.

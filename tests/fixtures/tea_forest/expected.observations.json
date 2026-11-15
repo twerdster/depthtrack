@@ -1,0 +1,43 @@
+{
+  "probability_threshold": 0.25,
+  "min_pixels": 3,
+  "fingertip_classes": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "method": "largest4connected-probability-weighted-centroid",
+  "observations": [
+    {
+      "class_id": 0,
+      "xyz": [
+        -0.4,
+        -0.8,
+        400.0
+      ],
+      "pixels": 3
+    },
+    {
+      "class_id": 1,
+      "xyz": [
+        -0.35,
+        0.0,
+        350.0
+      ],
+      "pixels": 3
+    },
+    null,
+    {
+      "class_id": 3,
+      "xyz": [
+        1.35,
+        0.0,
+        450.0
+      ],
+      "pixels": 3
+    },
+    null
+  ]
+}

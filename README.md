@@ -4,6 +4,11 @@ Portable depth-tree inference and responsive 3D point tracking, with a recorded 
 
 **[Open the browser demo](https://twerdster.github.io/depthtrack/)** · [Recorded outputs](docs/results.md) · [Native/mobile guide](docs/native-platforms.md) · [Inference backends](backends/README.md)
 
+Native Tea forests have a separate [CPU inference and calibrated observation
+guide](docs/tea-forest.md). This path loads feature-index trees with their exact
+`Coords.co` files, averages per-tree probabilities, and supports complete deep
+forests. Its new synthetic tests do not establish recognition accuracy.
+
 ![Recorded depth-image tracking on Mac CPU](docs/media/improved_tracking_phone.gif)
 
 The demo contains130 real recorded depth frames spanning17.6s. Crosses are learned fingertip detections; circles and trails are the new tracker. The browser actually computes the causal tracker from the recorded observations. It does not run a neural network or capture a camera. [Compare the original and improved output](docs/media/comparison_frame_066.png).

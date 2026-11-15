@@ -1,0 +1,78 @@
+{
+  "contracts": [
+    "float32 complete coordinate sums; exact labels/probabilities/heaps",
+    "weighted normalized tree posteriors; root-prior fallback",
+    "malformed models and invalid manifests rejected",
+    "full 20-decision three-tree traversal; uint32 heaps",
+    "calibrated observations and explicit missing/held temporal states",
+    "centre-only masks preserve raw neighbor depth",
+    "fixed independent near-component foreground with deterministic ties and minimum support",
+    "optional eighth modeled background distinct from invalid depth; rejected as point observation",
+    "largest4connected confidence components; weighted pixelXY/meanZ then pinhole, five finite/missing class slots",
+    "optional frozen manifest postprocessing defaults; explicit CLI overrides"
+  ],
+  "platforms": [
+    {
+      "architecture": "arm64",
+      "build": "build/tea",
+      "compiler": "AppleClang 16.0.0",
+      "ctest_failed": 0,
+      "ctest_passed": 6,
+      "system": "macOS"
+    },
+    {
+      "architecture": "x86_64",
+      "compiler": "GNU 11.4.0",
+      "ctest_failed": 0,
+      "ctest_passed": 6,
+      "system": "Linux"
+    }
+  ],
+  "python_reference_parity": {
+    "fixture": "tests/fixtures/tea_forest",
+    "foreground_labels_and_probabilities_exact_bytes": true,
+    "foreground_mask_exact_bytes": true,
+    "heap_pixel_tree_exact_bytes": true,
+    "labels_exact_bytes": true,
+    "method": "Independently implemented NumPy/SciPy evaluator compared with the committed portable oracle.",
+    "module": "Tea/scripts/tea_model.py",
+    "probabilities_hwc_exact_bytes": true
+  },
+  "recorded_utc": "2026-11-15T13:09:06.094209+00:00",
+  "schema": "depthtrack-tea-native-validation-v1",
+  "scope": "Synthetic native Tea forest correctness; no model training or recognition accuracy claim",
+  "sha256": {
+    "CMakeLists.txt": "14ffe2c694e800f4e62e0e326e42e3d9f64d993c0a74a5231a3cfeca9f7512d8",
+    "examples/tea_infer.cpp": "7481bbc3cbf7d36773dfd091f2a4dff92d4d219a074244e7ff0dcf36dba674ce",
+    "include/depthtrack/tea_forest.hpp": "75ee9d481f5df72ff5b845c1169174f49d71c80f8ba662cac509a123681d4af3",
+    "src/tea_forest.cpp": "9becd03da1817c081d406c12691356b0895b13e24d6c4af992d8ef4adeb0e20c",
+    "src/tea_json.hpp": "e466bfb6640dc657fb4d81be662bb23b87ee20b490bfce38f43fd181a1847e27",
+    "tests/fixtures/tea_forest/Coords.co": "36bf3aadd022d8d50b0bb37011ca2be5a00b3e928b111db778685f40d5a149eb",
+    "tests/fixtures/tea_forest/Tree_0000.tree": "d2b2aade142437bcc98f7319f02d9c29ecca1338ba8a693544014d18964ebd2d",
+    "tests/fixtures/tea_forest/Tree_0001.tree": "c7eed0089cc39bd92a2a1153a722bc64f8148b4ea5913582731c22725402ca43",
+    "tests/fixtures/tea_forest/Tree_0002.tree": "f48294a6c91be3aa3ede6344c249a60aef43ef2f2cc26c6afebc44515df81e00",
+    "tests/fixtures/tea_forest/depth.u16": "8795687518e9040d329d9a2228539cb1992088f3a174d083afd38be1eac297f9",
+    "tests/fixtures/tea_forest/expected.heap.u32": "ceb65ac86ea3b69a11c53c2380de26a5b9d03ff99b8ee57e648b10ccc900884a",
+    "tests/fixtures/tea_forest/expected.labels.u8": "dd4c37264fdb00b91ba1261ce0cb22877d3bea935cc850ed6057de18fe68316a",
+    "tests/fixtures/tea_forest/expected.observations.json": "a7a9c5ab30b6bdb124e970c8b6f3f4944d746201cb2214a3f403e16f221f2366",
+    "tests/fixtures/tea_forest/expected.probabilities.f32": "87316b46235f968c953cbed886ccaaa4edebdbce89f3b9e5098d0fbd92038bd3",
+    "tests/fixtures/tea_forest/forest.json": "5536d6b4f4d1b1dee125377faecd7e22db53f6b00fb72367b91885cab4731894",
+    "tests/fixtures/tea_forest/observations.depth.u16": "2b77acfbd9dc968f347cad1342bfa65fa427e7cb879202d02aeb18d04ccee991",
+    "tests/fixtures/tea_forest/observations.probabilities.f32": "08485e63b5e970b44d8ed016d8639e0736057549f986bc5727e132d6ee5c91e8",
+    "tests/native/test_tea_forest.py": "e200d81a9e109d624d0e774078ca1e242973aa5aaea7c4243bb442d68e158bad",
+    "tests/native/test_tea_observations.cpp": "772bef05f1017bc7fa74c215087bed38926377e59eb6136f925d14fa37feda5f"
+  },
+  "tests": [
+    "tea_observation_components",
+    "tea_forest_contracts",
+    "native_unit",
+    "native_golden_csv",
+    "c_header",
+    "native_golden_json"
+  ],
+  "unsupported_new_model_backends": [
+    "Metal",
+    "mobile device inference",
+    "FPGA"
+  ]
+}

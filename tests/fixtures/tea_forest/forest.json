@@ -1,0 +1,56 @@
+{
+  "schema": "depthtrack-tea-forest-v1",
+  "image": {
+    "width": 4,
+    "height": 3,
+    "depth_unit": "millimetres",
+    "intrinsics": {
+      "fx": 500,
+      "fy": 500,
+      "cx": 1.5,
+      "cy": 1.0
+    }
+  },
+  "feature": {
+    "type": "F_CHAR",
+    "max_diff": 250,
+    "maximum": 127,
+    "coordinate_rule": "truncate-after-base-plus-offset-over-depth",
+    "coordinate_precision": "float32-complete-sum",
+    "missing": {
+      "both": 0,
+      "first": 127,
+      "second": -127
+    }
+  },
+  "classes": [
+    "class_0",
+    "class_1",
+    "class_2",
+    "class_3",
+    "class_4",
+    "class_5",
+    "class_6"
+  ],
+  "background_label": 7,
+  "unknown_label": 255,
+  "aggregation": "mean-normalized-leaf-probabilities",
+  "empty_leaf": "root-prior",
+  "trees": [
+    {
+      "model": "Tree_0000.tree",
+      "coords": "Coords.co",
+      "weight": 1.0
+    },
+    {
+      "model": "Tree_0001.tree",
+      "coords": "Coords.co",
+      "weight": 1.0
+    },
+    {
+      "model": "Tree_0002.tree",
+      "coords": "Coords.co",
+      "weight": 2.0
+    }
+  ]
+}
