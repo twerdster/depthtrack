@@ -34,3 +34,13 @@ Deployment postprocessing must match held-out model selection: largest
 Preserve optional manifest defaults and their method identifier; explicit CLI
 overrides change the operating point and must be reported. Run
 `tea_observation_components` as well as `tea_forest_contracts` for native parity.
+
+For actual model integration, run `tools/validate_tea_handnet.py` with the
+immutable selected deployment manifest and matching frozen Tea reference. It
+must compare identical raw depths with unmodified neighbors in both foreground
+conditions. Keep labels/heaps/ROI exact; record posterior error/tolerance and
+diagnose any label disagreement rather than relaxing it. Check observation and
+tracker frame/class/time correspondence, finite outputs and complete histories.
+Declare synthetic models/timestamps explicitly; random split frames cannot prove
+temporal accuracy. Keep runtime artifacts/data outside version control, preserve
+historical CI records, and publish generic platform claims without machine paths.

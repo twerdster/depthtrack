@@ -14,7 +14,6 @@
   "platforms": [
     {
       "architecture": "arm64",
-      "build": "build/tea",
       "compiler": "AppleClang 16.0.0",
       "ctest_failed": 0,
       "ctest_passed": 6,

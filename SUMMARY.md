@@ -16,7 +16,7 @@ Scope: dependency-free C++17/C ABI tracking core, NumPy and JavaScript reference
 
 Read README.md for per-platform commands. `cmake -S . -B build/native` builds the portable core. `python -m depthtrack replay samples/handmesh/tracking_fixture.json --verify` reproduces saved states after package installation. `node --test web/tests/*.test.mjs` checks browser parity. `python3 backends/validate.py --cpu --metal` checks actual desktop inference; drop`--metal` onLinux. Webroot is`web/`; GitHubPages deploys after desktop/Android CI checks.
 
-Clean-checkout CI run43712008750 passed alljobs on sourcecommitb3b17e6219a93f0d915cb67565e710ee8278eda3, including Mac/Linux native/CPU, JS/Python, LinuxRTL, iOScross-builds and AndroidJNI. The run deployed https://twerdster.github.io/depthtrack/ (HTTP200 verified). Public code: https://github.com/twerdster/depthtrack. Exact job URLs/evidence scope are in docs/validation-ci.json; later documentation commits may have newer CI runs without changing the checked source bytes.
+Clean-checkout CI run 43717830988 passed Mac/Linux desktop and Android JNI jobs on source commit de06719f1be7e44b6dffb3ea612edfba01050e0f, including the new synthetic Tea forest and observation tests, native tracking, Python/JS, Linux RTL and iOS static cross-builds. Pages was skipped for this feature-branch run. The earlier successful run 43712008750 and its Pages deployment/HTTP check remain recorded in docs/validation-ci-history/. Public code: https://github.com/twerdster/depthtrack. Exact latest job URLs and scope are in docs/validation-ci.json.
 
 The130-frame HandMeshRecord demo contains635 learned observations;634 are accepted and one jump is explicitly held. Common-frame P95 separation from the same noisy detections improves116.82→15.37mm, or28.94→11.86mm on originally fresh matches. These are not anatomical accuracy or measured latency. Sample/model training-set membership and independence are unknown. The seven-class ten-split FPGA prefix differs from the full-depth two/nine-class detector used for recording.
 
@@ -24,8 +24,7 @@ No private email, licence credentials, account inventories, full proprietary SDK
 
 ## Native Tea forest integration, 2026-11-15
 
-Worktree `/Users/aaron/Downloads/depthtrack-handnet-training-2026-11-15`, branch
-`tea-handnet-forest`, adds a dependency-free C++17 native Tea forest loader and
+The Tea integration adds a dependency-free C++17 native forest loader and
 `depthtrack_tea` CLI. It loads 8-byte feature-index nodes plus per-tree float32
 `Coords.co`, uses declared F_CHAR 250/127 features with complete float32 coordinate
 sums, averages normalized leaf posteriors and explicitly falls back to each
@@ -38,8 +37,7 @@ anatomical labels or validate recognition accuracy. Mac executed tests include
 an independent float32 fixture oracle, corrupt-input cases, empty-leaf handling,
 weighted posteriors, calibrated missing-observation tracking and a complete
 20-decision three-tree traversal. All six native CTests pass on Mac arm64 and
-Linux x86-64 (`aaron-MS-7E48`, user `aaron`, isolated source/build
-`/home/aaron/depthtrack-handnet-native-validation-2026-11-15`, GNU 11.4.0).
+Linux x86-64 (GNU 11.4.0).
 The independent Tea Python reference also matches the portable fixture's labels,
 HWC probabilities and reached heaps byte for byte. Deep Metal/mobile/FPGA ports are not included.
 Existing historical outputs/fixtures/model/hardware are preserved. See
@@ -60,3 +58,13 @@ individual XYZ points and preserves missing outputs. Optional manifest
 `postprocessing` defaults freeze foreground, confidence, minimum support and
 class IDs; CLI overrides are tested. The method identifier is
 `largest4connected-probability-weighted-centroid`.
+
+The reusable `tools/validate_tea_handnet.py` checks supplied train/validation MAT
+depths against the matching frozen Tea Python reference, with exact labels/heaps/
+ROI, declared float32 posterior tolerance, calibrated observations and complete
+tracker states/history. A local macOS harness run passed on three actual training
+frames using an untrained synthetic fixture forest and synthetic 0.1 s timestamps.
+Observed posterior error was zero; observation/track differences stayed below
+2.28e-12 mm. This is harness validation, not trained-model accuracy, chronology,
+latency or a final model check. No test data was opened; labels and sensor poses were not loaded or used.
+Safe aggregate evidence is in `docs/tea-handnet-harness-validation.json`.

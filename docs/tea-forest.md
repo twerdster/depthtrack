@@ -152,3 +152,53 @@ mobile inference or FPGA. Cross-compilation disables the optional Tea library
 and CLI by default; existing mobile tracker builds retain their prior scope.
 `DEPTHTRACK_BUILD_TEA=OFF` also disables this backend on desktop. The old packed
 model, fixtures and hardware image are unchanged.
+
+## Supplied HandNet frames: native/Python integration checks
+
+`tools/validate_tea_handnet.py` accepts an immutable selected deployment manifest,
+the matching Tea Python reference, and extracted train/validation MAT frames. It
+does not change training sources or select models. Use the cropped deployment
+manifest so both implementations execute the same selected number of decisions.
+The tool refuses test-data directories and existing output directories.
+
+```sh
+python tools/validate_tea_handnet.py \
+  --manifest /path/to/selected/forest.json \
+  --frames /path/to/TrainData --split train \
+  --tea-reference /path/to/tea/scripts \
+  --native build/native/depthtrack_tea --tracker build/native/depthtrack_csv \
+  --output out/selected-model-parity --max-frames 3 \
+  --model-role trained-model --data-role actual-handnet --synthetic-step-s .1
+```
+
+NumPy and SciPy are required, along with the matching Tea reference modules.
+Declare the model/data role honestly: use `--model-role synthetic-harness` for
+untrained fixtures. Random HandNet frame splits do not establish a chronological
+sequence. `--synthetic-step-s` explicitly marks timestamps as an API experiment;
+it does not measure temporal tracking accuracy or latency. For a genuine recorded
+sequence, use `--timestamps times-seconds.txt` after verifying frame/clock alignment.
+
+Both `none` and independent `near-component` foreground conditions run on the
+same unmodified raw depth. Queried-centre ROIs, labels and reached heaps must
+agree exactly. Float32 posterior differences are reported in bytes, absolute
+error and ULPs; the default absolute acceptance tolerance is twice float32
+epsilon (2.3841858e-7), configurable with `--probability-atol`. Label disagreement
+is always a failure, including near argmax ties, with the first differing pixel,
+probabilities and heaps retained for diagnosis.
+
+The selected confidence/minimum-support/class defaults drive connected-component
+XYZ observations. Checks include finite/missing slots, support, frame/class/time
+correspondence, native/Python tracker lifecycle, positions, optional fields and
+complete histories. The integrated Tea tracker must also match separate native
+C API replay. Geometry/tracking tolerance defaults to 1e-8; raw outputs, model/input
+hashes, logs and a durable report remain in the new output directory. No ground
+truth labels or sensor poses enter this parity tool, and no recognition score is
+inferred from implementation agreement.
+
+The recorded [harness check](tea-handnet-harness-validation.json) used three
+actual **training** frames with an **untrained synthetic fixture forest** and a
+synthetic 0.1 s cadence. Both foreground conditions passed: labels/heaps/ROI matched
+exactly, observed posterior difference was zero, and the maximum observation
+difference was 2.28e-12 mm. All 30 tracker states and their histories matched. This
+validates the harness, not an actual trained HandNet model; that future check
+must be recorded separately after selected model artifacts exist.

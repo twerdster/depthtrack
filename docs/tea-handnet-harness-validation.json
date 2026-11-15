@@ -1,0 +1,137 @@
+{
+  "actual_trained_model_check": false,
+  "data_role_declared_by_caller": "actual-handnet",
+  "execution_platform": "macOS arm64",
+  "frame_count": 3,
+  "geometry_and_tracking_absolute_tolerance": 1e-08,
+  "ground_truth_labels_or_poses_loaded": false,
+  "harness_sha256": "7a4f0389eae757cdb214bbb166d68549ebbdb319037a7b1ba0b9d7bebb7d0c94",
+  "input_frame_names": [
+    "Data_0000000.mat",
+    "Data_0000001.mat",
+    "Data_0000002.mat"
+  ],
+  "input_frame_sha256": [
+    "a54340d1d6e204013f9898ddc206e9f64532e565832698c430b6c516109178d7",
+    "89461e4af4066ff030d1c8218bbb47d6f07cfdbb0a8e0faf929de4f9a430f571",
+    "5315aba92de95d798fe0b5fa21d7445d446ae7eaa4e536344fa0f15d619943f9"
+  ],
+  "limitation": "Untrained synthetic fixture model on supplied frames: harness validation only; no actual trained-model result.",
+  "manifest_sha256": "6fead5a372a44737e0a9d4318d8af85bc16ddec7bbf852623faf137ecdc7123c",
+  "model_role_declared_by_caller": "synthetic-harness",
+  "modes": [
+    {
+      "heap_mismatches": 0,
+      "integrated_tea_tracking_matches_full_c_api_replay": true,
+      "label_mismatches": 0,
+      "mask_mismatches": 0,
+      "mode": "none",
+      "observation_max_absolute_difference_mm": 2.2737367544323206e-12,
+      "observations_missing": 9,
+      "observations_present": 6,
+      "phase": "passed",
+      "postprocessing": {
+        "fingertip_classes": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "method": "largest4connected-probability-weighted-centroid",
+        "min_pixels": 3,
+        "probability_threshold": 0.25
+      },
+      "probability_absolute_tolerance": 2.384185791015625e-07,
+      "probability_byte_mismatches": 0,
+      "probability_exact_bytes": true,
+      "probability_max_absolute_difference": 0.0,
+      "probability_max_ulps": 0,
+      "queried_pixels": 44329,
+      "raw_neighbor_depth_preserved": true,
+      "tracking": {
+        "history_samples": 8,
+        "max_numeric_absolute_difference": 2.2737367544323206e-12,
+        "states": 15,
+        "status_acceptance_generation_missing_and_history_match": true,
+        "tolerance": 1e-08
+      }
+    },
+    {
+      "heap_mismatches": 0,
+      "integrated_tea_tracking_matches_full_c_api_replay": true,
+      "label_mismatches": 0,
+      "mask_mismatches": 0,
+      "mode": "near-component",
+      "observation_max_absolute_difference_mm": 1.4210854715202004e-12,
+      "observations_missing": 9,
+      "observations_present": 6,
+      "phase": "passed",
+      "postprocessing": {
+        "fingertip_classes": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "method": "largest4connected-probability-weighted-centroid",
+        "min_pixels": 3,
+        "probability_threshold": 0.25
+      },
+      "probability_absolute_tolerance": 2.384185791015625e-07,
+      "probability_byte_mismatches": 0,
+      "probability_exact_bytes": true,
+      "probability_max_absolute_difference": 0.0,
+      "probability_max_ulps": 0,
+      "queried_pixels": 16274,
+      "raw_neighbor_depth_preserved": true,
+      "tracking": {
+        "history_samples": 8,
+        "max_numeric_absolute_difference": 8.917311333789257e-13,
+        "states": 15,
+        "status_acceptance_generation_missing_and_history_match": true,
+        "tolerance": 1e-08
+      }
+    }
+  ],
+  "native_binary_sha256": "99e6c6c3b6f94dc69a80a984f5b6606d89f96c3017f7b06fdf93e648500069ea",
+  "not_covered_by_prior_ci": "This new reusable harness was executed locally after source de06719; latest CI evidence for de06719 covers the native synthetic tests, not this later script.",
+  "phase": "passed",
+  "probability_absolute_tolerance": 2.384185791015625e-07,
+  "recognition_accuracy_evaluated": false,
+  "reference_sha256": "1a9a6db81be4f59793bae48813a8a3854ced60da4b2df3960987c93071ac85e4",
+  "schema": "depthtrack-handnet-parity-v1",
+  "split": "train",
+  "temporal_accuracy_or_latency_evaluated": false,
+  "test_data_opened": false,
+  "timeline": {
+    "kind": "synthetic-api-cadence",
+    "note": "Frame order/cadence is an API parity experiment, not measured temporal performance.",
+    "step_s": 0.1
+  },
+  "tracker_binary_sha256": "b79bf922904b860ec14ad9e8bc0268bc60bb2ce52c37e0f6e7020880e14a4b77",
+  "trees": [
+    {
+      "classes": 7,
+      "coords_sha256": "36bf3aadd022d8d50b0bb37011ca2be5a00b3e928b111db778685f40d5a149eb",
+      "index": 0,
+      "model_sha256": "d2b2aade142437bcc98f7319f02d9c29ecca1338ba8a693544014d18964ebd2d",
+      "split_decisions": 2
+    },
+    {
+      "classes": 7,
+      "coords_sha256": "36bf3aadd022d8d50b0bb37011ca2be5a00b3e928b111db778685f40d5a149eb",
+      "index": 1,
+      "model_sha256": "c7eed0089cc39bd92a2a1153a722bc64f8148b4ea5913582731c22725402ca43",
+      "split_decisions": 2
+    },
+    {
+      "classes": 7,
+      "coords_sha256": "36bf3aadd022d8d50b0bb37011ca2be5a00b3e928b111db778685f40d5a149eb",
+      "index": 2,
+      "model_sha256": "f48294a6c91be3aa3ede6344c249a60aef43ef2f2cc26c6afebc44515df81e00",
+      "split_decisions": 2
+    }
+  ]
+}
