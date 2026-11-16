@@ -1,13 +1,20 @@
 {
   "date": "2026-11-15",
-  "source_commit": "b3b17e6219a93f0d915cb67565e710ee8278eda3",
-  "workflow_run": "https://github.com/twerdster/depthtrack/actions/runs/43712008750",
+  "checked_at_utc": "2026-11-15T13:24:56.524706+00:00",
+  "source_commit": "de06719f1be7e44b6dffb3ea612edfba01050e0f",
+  "workflow_run": "https://github.com/twerdster/depthtrack/actions/runs/43717830988",
   "conclusion": "success",
   "jobs": {
-    "macos": "https://github.com/twerdster/depthtrack/actions/runs/43712008750/job/132805418081",
-    "android_jni_arm64": "https://github.com/twerdster/depthtrack/actions/runs/43712008750/job/132805418272",
-    "linux": "https://github.com/twerdster/depthtrack/actions/runs/43712008750/job/132805418484",
-    "pages": "https://github.com/twerdster/depthtrack/actions/runs/43712008750/job/132805795011"
+    "macos": "https://github.com/twerdster/depthtrack/actions/runs/43717830988/job/132823077400",
+    "linux": "https://github.com/twerdster/depthtrack/actions/runs/43717830988/job/132823077742",
+    "android_jni_arm64": "https://github.com/twerdster/depthtrack/actions/runs/43717830988/job/132823077771",
+    "pages": "https://github.com/twerdster/depthtrack/actions/runs/43717830988/job/132823388972"
+  },
+  "job_conclusions": {
+    "macos": "success",
+    "linux": "success",
+    "android_jni_arm64": "success",
+    "pages": "skipped"
   },
   "scope": {
     "native_tracking_and_golden_states": true,
@@ -21,8 +28,16 @@
     "physical_fpga_access_in_ci": false,
     "metal_gpu_execution_in_ci": false,
     "metal_gpu_local_execution": true,
-    "public_pages_http_200": true
+    "native_tea_forest_cpu_and_postprocessing_synthetic_tests": true,
+    "pages_deployment_in_this_run": false
   },
   "demo_url": "https://twerdster.github.io/depthtrack/",
-  "note": "Cross-compilation and recorded tracker/backend checks do not establish mobile device runtime, live capture or anatomical accuracy. Historical physical FPGA evidence is preserved separately."
+  "previous_evidence": [
+    {
+      "file": "validation-ci-history/2026-11-15-run-43712008750.json",
+      "workflow_run": "https://github.com/twerdster/depthtrack/actions/runs/43712008750",
+      "source_commit": "b3b17e6219a93f0d915cb67565e710ee8278eda3"
+    }
+  ],
+  "note": "This feature-branch run passed Mac/Linux desktop and Android JNI jobs, including synthetic Tea forest/observation tests. Pages was skipped; the earlier deployment and HTTP check are preserved in the historical evidence record. No actual trained HandNet model accuracy, mobile device runtime, live capture, or deep Metal/FPGA execution is established."
 }
