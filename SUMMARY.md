@@ -2,7 +2,7 @@
 
 Portable depth-tree inference and timestamp-aware 3D point tracking, extracted from Aaron Wetzler's restored ZScanV02/Mojo research demo on2026-11-15. The original research workspace is preserved; this repository is a self-contained extraction.
 
-Scope: dependency-free C++17/C ABI tracking core, NumPy and JavaScript reference implementations, CPU/Metal/Spartan-6 inference backends, recorded output evidence, mobile browser replay and Swift/Kotlin-JNI integration examples. Platform claims distinguish executed tests, cross-compilation and untested device integration. No training provenance connecting recovered trees to HandNet is established. No training or hardware modifications occurred during packaging.
+Scope: dependency-free C++17/C ABI tracking core, NumPy and JavaScript reference implementations, CPU/Metal/Spartan-6 inference backends, recorded output evidence, mobile browser replay and Swift/Kotlin-JNI integration examples. Platform claims distinguish executed tests, cross-compilation and untested device integration. No training provenance connecting recovered trees to HandNet is established. The separately trained Tea HandNet models have explicit provenance in the selected-model section below; packaging did not train or modify the historical trees/hardware.
 
 ## Executed validation
 
@@ -14,7 +14,7 @@ Scope: dependency-free C++17/C ABI tracking core, NumPy and JavaScript reference
 
 ## Run and maintenance
 
-Read README.md for per-platform commands. `cmake -S . -B build/native` builds the portable core. `python -m depthtrack replay samples/handmesh/tracking_fixture.json --verify` reproduces saved states after package installation. `node --test web/tests/*.test.mjs` checks browser parity. `python3 backends/validate.py --cpu --metal` checks actual desktop inference; drop`--metal` onLinux. Webroot is`web/`; GitHubPages deploys after desktop/Android CI checks.
+Read README.md for per-platform commands. `cmake -S . -B build/native` builds the portable core. `python -m depthtrack replay samples/handmesh/tracking_fixture.json --verify` reproduces saved states after package installation. `node --test web/tests/*.test.mjs web/live/tests/*.test.mjs` checks browser parity and live numerical/lifecycle helpers. `python3 backends/validate.py --cpu --metal` checks actual desktop inference; drop`--metal` onLinux. Webroot is`web/`; GitHubPages deploys after desktop/Android CI checks.
 
 Clean-checkout CI run 43717830988 passed Mac/Linux desktop and Android JNI jobs on source commit de06719f1be7e44b6dffb3ea612edfba01050e0f, including the new synthetic Tea forest and observation tests, native tracking, Python/JS, Linux RTL and iOS static cross-builds. Pages was skipped for this feature-branch run. The earlier successful run 43712008750 and its Pages deployment/HTTP check remain recorded in docs/validation-ci-history/. Public code: https://github.com/twerdster/depthtrack. Exact latest job URLs and scope are in docs/validation-ci.json.
 
@@ -96,3 +96,37 @@ and tracker difference 3.41e-13 mm, and exact Linux/Mac outputs. Synthetic 0.1 s
 cadence is numerical/API evidence, not temporal accuracy or measured latency.
 The public JSON excludes raw frame identities, input fingerprints, machine paths
 and private runtime records. Native code and all earlier fixtures are unchanged.
+
+## Live monocular experiment (2026-11-15)
+
+`web/live/` now adds local browser camera/photo → Depth Anything V2 Small at294² → two-anchor approximate inverse-depth calibration → gated128² depth → the exact compact seven-class ten-split tree → largest-class-region XYZ candidates → shared causal tracking. Neural loading/inference lives in a terminable worker with visible progress/errors, GPU→CPU fallback and bounded waits; camera scheduling has one frame in flight and releases tracks on stop/hide/errors. No server receives frames. The existing recorded viewer remains independent of neural/CDN dependencies. Live route: https://twerdster.github.io/depthtrack/live/ ; operational/interpretation details: docs/monocular-live.md.
+
+Model/runtime pins: Transformers.js3.8.1 and `onnx-community/depth-anything-v2-small` revision4472b7362082ad9968fee890ca0f1e5aca36b93d. Raw floating relative inverse depth is used, never the normalized uint8 visualization. Two measured anchors fit inverse metres; distances remain approximate and scene drift can invalidate calibration. The compact tree has no learned nonzero background, so manual ROI/range masks cannot establish that retained pixels are hands. Component centroids are new experimental observations, not restored full-detector fingertip modes. FOV is assumed60°. No training, FPGA changes or physical phone execution occurred.
+
+Actual browser smoke on Mac M3 Max: raw294² finite output from real archived RGB hand images; CPUq8 first neural inference785.4ms; GPUfp16 first1184.1ms (compilation included), then repeated-image network-only calls16–17ms after warmup. These are development smoke measurements, not phone FPS or controlled camera/accuracy benchmarks. Fresh physical FaceTime capture succeeded and released tracks but was nearly black (0–6 gray range), so it provides no useful hand-detection evidence. Private capture/test data stays in ignored `out/`; no new camera imagery is published. Native browser/model caches remain on native storage because Chrome profiles require filesystem semantics beyond exFAT. Existing AgentSSD remained mounted with~1TiB free; no large original model archive was copied or trained.
+
+Browser integration with an actual neural WASMq8 model and Chrome synthetic camera passed start→3frames→stop/release→stable count→restart→6frames→stop/release without page errors. This is synthetic-source integration, distinct from physical capture. Relative-depth hand illustration and sanitized machine-readable smoke evidence are in docs/media/monocular_relative_hand.png and docs/monocular-smoke.json. No monocular-tree semantic accuracy or physical phone FPS is established.
+
+Local browser verification:75 Node tests pass, including exact tree/asset parity, calibration/component math, model/client/camera lifecycle and9 actual-app integration regressions for cancellation/reload/stale frames, calibrated photo tracking and invalid-cutoff recovery. Development Chrome390px responsive layout has no horizontal overflow. CI/Pages must be checked for the new source commit after publication.
+
+Pagehide unloads the model, invalidates pending work and disables camera/photo input until an explicit reload, including back/forward-cache restoration on phone browsers. The app lifecycle regression checks this recovery.
+
+## Combined integration review — 2026-11-16
+
+The integration combines upstream main `de334f7e2a89bcb607c8142cb00756136b46b91b`
+(live monocular browser experiment) with the native Tea adapter and selected-model
+documentation. The live page retains its exact compact seven-class ten-split
+assets; it does not load the selected eight-class, 20-decision HandNet forests.
+Those forests use the native CPU API/CLI and retain separate held-out recognition
+and numerical-parity evidence. No live-camera accuracy result follows from the
+HandNet evaluation. Preserve both paths and their independent model provenance.
+
+Combined local Mac arm64 CPU validation passed on 2026-11-16: a fresh Release
+build and all six CTests (including deep Tea contracts and observation components),
+Python tracker cases and the 130-frame/635-output replay, all 75 browser tests,
+and both packed CPU variants with exact labels/heaps over six fixtures (98,304
+pixels per variant). Live source/assets and its smoke evidence remain identical
+to upstream main; native Tea source and the selected-model parity JSON are
+unchanged. This merge check did not access cameras, download neural models, run
+GPU/Metal inference or repeat mobile cross-builds. Combined clean-checkout CI
+remains to be checked on the eventual published commit.

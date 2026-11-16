@@ -8,10 +8,10 @@ Build/test commands are in README.md and docs/native-platforms.md. Before commit
 
 - Native: CMake/Ctest,650 CSV and full JSON states/history, plus lifecycle/C-header checks.
 - Python: install editable package and replay bundled fixture with`--verify`; run tests/python/test_tracker.py.
-- Browser: node --test web/tests/*.test.mjs; serve`web/`overHTTP, check phone layout/play/pause/scrub and honest held/lost rendering. Do not substitute cached expected states for executed JavaScript output.
+- Browser: node --test web/tests/*.test.mjs web/live/tests/*.test.mjs; serve`web/`overHTTP, check phone layout/play/pause/scrub and honest held/lost rendering. Do not substitute cached expected states for executed JavaScript output.
 - Inference: backends/validate.py --cpu, optionally--metal onMac; FPGA simulation via backends/fpga/sim/run.py --all-fixtures --uart. These commands do not open serial or program boards.
 
-Native mobile builds are distinct from device execution and camera acquisition. The supplied Swift/JNI APIs consume XYZ observations; no complete mobile app or depth capture pipeline is bundled. Do not claim mobile runtime, live depth capture, model training, or a full tracker on FPGA without execution evidence. No board programming is needed for ordinary tests. Keep large archived models external and preserve existing component notices; do not silently assign HandNet training provenance or its dataset license to the historical recording.
+Native mobile builds are distinct from device execution and camera acquisition. The supplied Swift/JNI APIs consume XYZ observations; no complete native mobile app or metric sensor-depth capture pipeline is bundled. The separate browser monocular experiment uses approximate two-anchor calibration and does not establish native capture or metric sensor accuracy. Do not claim mobile runtime, live depth capture, model training, or a full tracker on FPGA without execution evidence. No board programming is needed for ordinary tests. Keep large archived models external and preserve existing component notices; do not silently assign HandNet training provenance or its dataset license to the historical recording.
 
 For new native Tea forests, follow `docs/tea-forest.md`. Build/test with the normal
 CMake commands; `tea_forest_contracts` verifies independent float32/heap parity,
@@ -72,3 +72,32 @@ The current guide records the completed 10,000-frame original test audit and
 unchanged 20/.25/min3 selection. Distinguish independently reconstructed metric
 arithmetic from rerunning predictions, and keep three-training-frame native
 parity separate from held-out recognition results.
+
+## Live monocular workflow
+
+Live monocular work: read docs/monocular-live.md. `web/live/` is an experimental browser-only input path, distinct from recorded metric sensor depth and physical FPGA execution. Preserve pinned library/model revisions and assert actual `[1,3,294,294]` network input. Consume floating relative inverse depth; two-anchor inverse-depth calibration remains approximate. Never independently min/max-normalize frames into mm or silently reuse a previous camera session's anchors. Keep candidate class regions/approximate FOV and unverified anatomical accuracy explicit. Range masks are not hand segmentation. Camera/model failure paths must remain visible and cancellable; one in-flight frame, capture timestamps, stop/hide/late-permission cleanup and stale-result guards are required. Run `node --test web/tests/*.test.mjs web/live/tests/*.test.mjs`; maintain exact labels AND heap paths on all six packed-tree fixtures. Keep web/live/model assets identical to backends/model/depth10. Test real model execution separately from mocked lifecycle tests; distinguish repeated-image warm network timing, full camera throughput and physical phone runtime. Do not publish private webcam imagery or silently claim a dark/failed capture as useful detection evidence.
+
+Preserve the evidence boundaries in docs/monocular-smoke.json and the relative-only hand illustration. Synthetic browser camera tests validate wiring/release, not a physical hand scene. App-level cancellation regression checks must keep cancelled asset loads/photo decodes from reviving or overwriting a new model session.
+
+Before publishing live changes, run all75 browser tests (including9 app integration tests), preserve asset identity, and check hosted /live/ modules plus actual model inference. Recorded replay and platform build checks must continue to pass in CI.
+
+Pagehide unloads the model, invalidates pending work and disables camera/photo input until an explicit reload, including back/forward-cache restoration on phone browsers. The app lifecycle regression checks this recovery.
+
+## Combined model boundaries
+
+Keep the upstream live monocular browser path and native Tea forest path intact
+when integrating branches. `web/live/model/` stays identical to the compact
+seven-class ten-split backend assets. Selected HandNet release forests are
+eight-class, 20-decision CPU models loaded through the Tea manifest/API/CLI; do not
+substitute them into the browser experiment or transfer held-out recognition
+claims to monocular camera input. Validate the combined tree with native CTests,
+Python replay/tests, CPU backend fixture parity and all 75 browser tests. Real
+neural/browser smoke, GPU checks and device execution remain separately scoped
+evidence; ordinary merge validation does not require camera access or model
+downloads.
+
+The 2026-11-16 combined local integration passed all six native CTests, all 75
+browser tests, Python tracker/replay checks and both CPU backend fixture variants.
+Preserve upstream real-model smoke as historical evidence; do not describe these
+CPU/mock-based merge checks as fresh neural, camera or phone execution. Recheck
+clean-checkout CI on the reviewed integration commit before publishing/pinning.

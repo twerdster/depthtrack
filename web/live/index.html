@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#0c171c">
+<title>DepthTrack · live monocular experiment</title><link rel="stylesheet" href="./style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='12' fill='%237ce8c1'/%3E%3C/svg%3E">
+</head>
+<body><main>
+<header><a href="../">◌ DepthTrack</a><span>LIVE LAB / 01</span></header>
+<p class="eyebrow">RGB → estimated depth → your decision tree</p>
+<h1>Depth from a webcam.</h1>
+<p class="lede">A live experiment with Depth Anything V2 Small and the recovered ten-split hand tree. Everything runs on this device. Camera images stay here.</p>
+<div class="notice"><strong>Estimated depth, experimental labels.</strong> This model has no absolute distance scale. Calibrate at two measured distances before running the tree. Fine finger shape and anatomical accuracy are unverified.</div>
+<section class="controls" aria-label="Camera and model">
+<div class="row"><label>Compute <select id="device"><option value="auto">GPU if available, otherwise CPU</option><option value="wasm">CPU / compatibility mode</option></select></label><button id="load" class="primary">1. Load depth model</button><button id="cancel" disabled>Cancel model work</button></div>
+<progress id="progress" max="100" value="0" hidden></progress>
+<p id="status" role="status" aria-live="polite">Ready. The first model download is about 27–99 MB, plus the runtime.</p>
+<div id="error" role="alert" hidden></div>
+<div class="row"><label>Camera <select id="facing"><option value="user">Front / webcam</option><option value="environment">Rear camera</option></select></label><button id="start" disabled>2. Start camera</button><button id="stop" disabled>Stop</button></div>
+<label class="file">Or test a photo locally <input type="file" id="photo" accept="image/*" disabled></label>
+</section>
+<section class="views" aria-label="Synchronized inference output">
+<figure><figcaption><b>01 / RGB</b><span>same captured frame</span></figcaption><canvas id="rgb" width="294" height="294"></canvas></figure>
+<figure><figcaption><b>02 / DEPTH</b><span id="depth-caption">relative · brighter = nearer</span></figcaption><canvas id="depth" width="128" height="128"></canvas></figure>
+<figure><figcaption><b>03 / TREE + TRACKS</b><span>128 × 128 · ten splits</span></figcaption><canvas id="labels" width="128" height="128"></canvas></figure>
+</section>
+<video id="video" playsinline muted hidden></video>
+<div class="metrics"><span id="timing">No frames processed yet</span><span id="counts">Tree awaits calibration</span><span id="age"></span></div>
+<section class="calibration"><h2>Give depth a scale.</h2><p>Use a ruler. Put the same flat hand or target in the centre box at the near distance, capture an anchor, then repeat at the far distance. Keep the camera and scene fixed. These are approximate distances, even after calibration.</p>
+<div class="anchors"><div><label>Near distance (cm) <input id="near-cm" type="number" min="10" max="200" step="1" value="30"></label><button id="near" disabled>Capture near anchor</button><output id="near-value">Not captured</output></div><div><label>Far distance (cm) <input id="far-cm" type="number" min="15" max="400" step="1" value="70"></label><button id="far" disabled>Capture far anchor</button><output id="far-value">Not captured</output></div></div>
+<p id="cal-status" role="status">Two anchors required. The centre box samples raw relative inverse depth.</p>
+<div class="row"><label>Remove beyond (cm) <input id="cutoff" type="number" min="20" max="500" value="80" step="5"></label><label>Centre region <select id="roi"><option value="1">Full frame</option><option value="0.85" selected>85% width</option><option value="0.65">65% width</option><option value="0.45">45% width</option></select></label><button id="reset">Reset calibration</button></div>
+<p class="small">Pixels closer than 15 cm or beyond the selected cutoff become background 7. This tree labels every remaining pixel as a hand part; a room or face can therefore produce false hand labels. The centre region is a manual mask, not a hand detector.</p>
+</section>
+<div class="legend"><span style="--c:#ff6868">Thumb</span><span style="--c:#ffcb4d">Index</span><span style="--c:#46db8c">Middle</span><span style="--c:#48bfff">Ring</span><span style="--c:#c280ff">Pinky</span><span style="--c:#c8d0cc">Palm / wrist</span></div>
+<p class="small">Circles and short trails track the largest region of each finger label. Held points use dashed circles. These regions are experimental observations, not verified fingertips. XYZ uses an assumed 60° field of view.</p>
+<button id="save" disabled>Save this result as PNG</button>
+<details><summary>What is actually running?</summary><p>Depth Anything V2 Small runs at 294 × 294 in a worker, with WebGPU when possible and a WASM CPU fallback. Raw relative inverse depth is mapped using two anchors, resampled to 128 × 128, distance-gated and evaluated by the same packed ten-split tree used in the Mojo comparisons. The JavaScript labels and reached leaves match all 98,304 numerical fixture pixels. The new causal tracker runs on CPU in this browser.</p><p>This is a new input experiment, not a reproduction of the original full-depth detector or a claim of HandNet training. The tree was trained on sensor depth; monocular depth can lose finger geometry and change scale across frames. Calibration and temporal smoothing cannot recover missing geometry. The phone, not the FPGA, performs this demo. No physical phone speed is claimed.</p><p>The app downloads code from jsDelivr and model weights from Hugging Face. Images are processed locally; there is no frame-upload endpoint. Network access is needed for the first load. On older phones, use CPU mode and expect slower updates. Stop releases the camera. Keep this page open while processing.</p><p><a href="https://github.com/DepthAnything/Depth-Anything-V2">Depth Anything source</a> · <a href="https://huggingface.co/onnx-community/depth-anything-v2-small/tree/4472b7362082ad9968fee890ca0f1e5aca36b93d">Pinned ONNX model</a> · <a href="https://github.com/twerdster/depthtrack">Code and tests</a></p></details>
+<footer><a href="../">Recorded sensor-depth comparison →</a><span>DepthTrack · local computation</span></footer>
+<noscript><p>Enable JavaScript to use local camera inference.</p></noscript>
+<script>setTimeout(()=>{if(!window.depthtrackLiveReady){document.getElementById('error').hidden=false;document.getElementById('error').textContent='The app did not load. Check your connection and reload this page.'}},15000)</script>
+<script type="module" src="./app.mjs"></script>
+</main></body></html>

@@ -1,0 +1,1 @@
+These are byte-identical copies of `backends/model/depth10/{nodes.bin,leaves.bin,model.json}` for the static browser deployment. The tree test checks that identity. It is the recovered seven-class ten-split HandPlugin prefix; see the repository's `NOTICE.md` and backend provenance. The external monocular neural model is downloaded separately and is not stored here.

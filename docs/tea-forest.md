@@ -58,8 +58,8 @@ independent audit of raw frame identities, separation, ground-truth counts,
 reported localization hits/errors and score arithmetic. That metric audit did
 not rerun per-pixel classifier predictions. Official random-frame splits do not
 establish participant/session independence or reproduce the paper's metric.
-The [Tea final-results report](https://github.com/twerdster/tea/blob/handnet-forest-training/docs/handnet-forest-results.md)
-and [safe aggregate evidence](https://github.com/twerdster/tea/blob/handnet-forest-training/docs/evidence/handnet-forest-2026-11-16.json)
+The [Tea final-results report](https://github.com/twerdster/tea/blob/main/docs/handnet-forest-results.md)
+and [safe aggregate evidence](https://github.com/twerdster/tea/blob/main/docs/evidence/handnet-forest-2026-11-16.json)
 give the experiment, evaluation denominators and limitations.
 
 Actual selected-model parity passed on **Linux x86-64 and Mac arm64**, using the

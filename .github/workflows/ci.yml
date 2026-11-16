@@ -24,7 +24,7 @@ jobs:
       - run: python tests/python/test_tracker.py
       - run: python -m depthtrack replay samples/handmesh/tracking_fixture.json --verify
       - run: python tools/unpack_sample.py --output build/depth.u16
-      - run: node --test web/tests/*.test.mjs
+      - run: node --test web/tests/*.test.mjs web/live/tests/*.test.mjs
       - run: python backends/validate.py --cpu
       - name: iOS static cross-builds
         if: runner.os == 'macOS'

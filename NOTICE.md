@@ -9,3 +9,5 @@ DepthTrack packages research code and recorded results recovered from Aaron Wetz
 - The HandMeshRecord fixture is a recovered separate recording attributed to Aaron Wetzler. Training provenance, split membership and a HandNet license for that recording are not established. The HandNet parent repository retains its own original code/data terms.
 
 No repository-wide license has been imposed over mixed historical/vendor components. Public availability does not replace the notices and permissions associated with each component. No proprietary SDK installers, licence files, credentials, email attachments or account inventories are included.
+
+The optional live monocular browser page downloads Transformers.js3.8.1 (Apache2.0) and the Depth Anything V2 Small ONNX export (Apache2.0), pinned and linked in docs/monocular-live.md. Those external components retain their upstream terms; no weights or runtime bundle are included here. The recovered compact tree remains under the historical/component scope above. Estimated-depth region tracks do not establish anatomical accuracy or training provenance.

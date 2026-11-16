@@ -1,0 +1,96 @@
+{
+  "schema": "legacy-handplugin-depth10-v2",
+  "split_levels": 10,
+  "trained": true,
+  "training_performed_in_this_task": false,
+  "complete_prefix": true,
+  "pruned": true,
+  "internal_nodes": 1023,
+  "terminal_histograms": 1024,
+  "source_tree_header": {
+    "depth": 21,
+    "classes": 7,
+    "total_nodes": 4194303,
+    "total_histograms": 8388607
+  },
+  "profile": {
+    "name": "matched_Intel_HandPlugin_literal_CPU",
+    "max_diff_mm": 200,
+    "feature_saturation": 126,
+    "depth_unit": "millimetres",
+    "centre_zero_label": 7,
+    "original_invalid_centre_label": 7,
+    "unknown_or_no_positive_vote_label": 255,
+    "output_labels": "0..6 learned hand parts;7 zero-depth background;255 no positive vote",
+    "coordinate_rule": "trunc_zero(base*z+offset,z); full path checked against float32 on every fixture",
+    "neighbour_zero_or_oob": "feature0 both missing,+126 first missing,-126 second missing",
+    "take_right": "literal historical feature > float32 threshold; exact integer cut plus flags",
+    "histogram_lookup": "literal historical hist[heap_index], no+1 adjustment",
+    "histogram_anomaly": "hist0 empty/hist1 prior observed in earlier recovery; literal indexing preserved",
+    "class_names": {
+      "0": "thumb",
+      "1": "index",
+      "2": "middle",
+      "3": "ring",
+      "4": "pinky",
+      "5": "palm",
+      "6": "wrist",
+      "7": "background",
+      "255": "unknown/no positive vote"
+    },
+    "semantic_accuracy_verified": false,
+    "postprocessing": "none; no Gaussian histogram smoothing"
+  },
+  "packing": {
+    "node_bytes": 12,
+    "endian": "little",
+    "hex_words": "96bits MSB-first per line",
+    "fields": {
+      "15:0": "row1 signed16",
+      "31:16": "col1 signed16",
+      "47:32": "row2 signed16",
+      "63:48": "col2 signed16",
+      "79:64": "rawCut signed16",
+      "80": "bothMissingRight",
+      "81": "firstMissingRight",
+      "82": "secondMissingRight",
+      "83": "normalAlwaysLeft",
+      "84": "normalAlwaysRight",
+      "85": "nodeValid",
+      "95:86": "zero"
+    }
+  },
+  "offset_validation": {
+    "signed16_fit": true,
+    "minimum": -29946,
+    "maximum": 29995,
+    "quantization_performed": false
+  },
+  "provenance": "Recovered historical seven-class HandPlugin tree, complete ten-split prefix. No link to a HandNet training run is established. Full depth21 model not included.",
+  "included_files": {
+    "depth10/leaves.bin": {
+      "bytes": 1024,
+      "sha256": "700a1b43eccaa1718a5db8e66490361bfa6e80247a154a6116a4c040de0064e4"
+    },
+    "depth10/nodes.bin": {
+      "bytes": 12276,
+      "sha256": "0ba5e0b6a87049beb392334d83473325fa376c141a4d5bd43f1bbac2ff15c2f7"
+    },
+    "source_sections/terminal_compact.bin": {
+      "bytes": 8192,
+      "sha256": "e2a2557add9a55bf84f0e35968f799caad6fdeebafba7098440fd0a8fa13da6c"
+    },
+    "source_sections/nodes_prefix.bin": {
+      "bytes": 24552,
+      "sha256": "ada7dbab21b739e16f454ee16f567055481de469b6ed3a0f9102152d32bece6f"
+    },
+    "source_sections/terminal_histograms.bin": {
+      "bytes": 7168,
+      "sha256": "8fb766b3f9f5692eb40fbb17587e03dff248de15e8e3844226f9ad12e502dfaf"
+    },
+    "source_sections/header.bin": {
+      "bytes": 16,
+      "sha256": "84f86e96ba75ef30551f241042f55981d7168a1870910fa9a6fe523285e7bf9e"
+    }
+  }
+}
