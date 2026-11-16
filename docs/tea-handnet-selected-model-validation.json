@@ -1,0 +1,138 @@
+{
+  "classes": [
+    "thumb",
+    "index",
+    "middle",
+    "ring",
+    "pinky",
+    "palm",
+    "wrist",
+    "background"
+  ],
+  "date": "2026-11-16",
+  "invalid_depth_label": 8,
+  "limits": [
+    "Three training frames establish numerical integration agreement only.",
+    "No held-out recognition score follows from this parity check.",
+    "Synthetic cadence does not establish chronology, temporal accuracy or latency.",
+    "Deep Metal, mobile-device and FPGA execution are not established.",
+    "The historical untrained-fixture harness record and recorded browser demo remain separate."
+  ],
+  "linux_macos_parity": {
+    "full_tracker_states_and_histories_match": true,
+    "labels_probabilities_heaps_masks_byte_exact": true,
+    "observation_tracking_max_absolute_difference": 0.0
+  },
+  "modeled_background_class": 7,
+  "models": [
+    {
+      "coordinate_and_sampling_seeds": [
+        201,
+        202,
+        203
+      ],
+      "features_per_tree": 1200,
+      "fingertip_classes": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "foreground": "none",
+      "kind": "ensemble",
+      "minimum_component_pixels": 3,
+      "probability_threshold": 0.25,
+      "split_decisions": 20,
+      "training_frames_per_tree": 181979,
+      "training_samples_per_tree": [
+        84759330,
+        84758588,
+        84759516
+      ],
+      "tree_assets": [
+        {
+          "coords_sha256": "af10d62c05eaad40c722aaed702610295ba064863d34d6f3fc1ab7cb3025376c",
+          "model_sha256": "a81c6725acaf7f5016ecc124c711c71e729c12faec0a2470b2fe75d9ac15fdf6"
+        },
+        {
+          "coords_sha256": "b084e60a67cc05b1bcc70152e7b860a67303075203f8a027f2e7cfab3942a426",
+          "model_sha256": "36c2ecab239b7fab01d8aec626ab3d94d742c7da890de2e8a2d76f1a02724f92"
+        },
+        {
+          "coords_sha256": "67dfebad2c63112d0091d183b6779f68795548764307fa0a2c22aafbd92b6197",
+          "model_sha256": "faef33656b66d4c40bee0c9c3ff8015cc3c83cb31678902bf49b05b1661486b1"
+        }
+      ],
+      "tree_count": 3
+    },
+    {
+      "coordinate_and_sampling_seeds": [
+        202
+      ],
+      "features_per_tree": 1200,
+      "fingertip_classes": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ],
+      "foreground": "none",
+      "kind": "single",
+      "minimum_component_pixels": 3,
+      "probability_threshold": 0.25,
+      "split_decisions": 20,
+      "training_frames_per_tree": 181979,
+      "training_samples_per_tree": [
+        84758588
+      ],
+      "tree_assets": [
+        {
+          "coords_sha256": "b084e60a67cc05b1bcc70152e7b860a67303075203f8a027f2e7cfab3942a426",
+          "model_sha256": "36c2ecab239b7fab01d8aec626ab3d94d742c7da890de2e8a2d76f1a02724f92"
+        }
+      ],
+      "tree_count": 1
+    }
+  ],
+  "native_python_parity": {
+    "data_role": "actual-training-depths",
+    "foreground_modes": [
+      "none",
+      "near-component"
+    ],
+    "geometry_tracking_absolute_tolerance": 1e-08,
+    "ground_truth_labels_or_sensor_poses_used": false,
+    "heap_mismatches": 0,
+    "label_mismatches": 0,
+    "labels_probabilities_heaps_masks_byte_exact": true,
+    "mask_mismatches": 0,
+    "model_platform_mode_cases": 8,
+    "observation_max_absolute_difference_mm": 3.410605131648481e-13,
+    "observations_and_full_tracker_states_histories_match": true,
+    "platforms": [
+      "linux-x86_64",
+      "macos-arm64"
+    ],
+    "probability_byte_mismatches": 0,
+    "probability_max_absolute_difference": 0.0,
+    "probability_max_ulps": 0,
+    "queried_centres_per_model_per_platform": {
+      "near-component": 16274,
+      "none": 44329
+    },
+    "raw_neighbor_depths_preserved": true,
+    "tracking_max_numeric_absolute_difference": 3.410605131648481e-13,
+    "training_frames": 3
+  },
+  "schema": "depthtrack-selected-handnet-model-parity-v1",
+  "scope": "Implementation agreement for the actual validation-selected HandNet single and three-tree ensemble; no recognition, temporal accuracy or latency evaluation in this parity check.",
+  "timestamps": {
+    "kind": "synthetic-api-cadence",
+    "measured_frame_rate": false,
+    "step_seconds": 0.1
+  },
+  "training_source_revision": "27ae728e9cb012d2255337d9b3583bbe7f66b3cc",
+  "unknown_label": 255
+}

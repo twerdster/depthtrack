@@ -68,3 +68,31 @@ Observed posterior error was zero; observation/track differences stayed below
 2.28e-12 mm. This is harness validation, not trained-model accuracy, chronology,
 latency or a final model check. No test data was opened; labels and sensor poses were not loaded or used.
 Safe aggregate evidence is in `docs/tea-handnet-harness-validation.json`.
+
+## Selected HandNet model integration — 2026-11-16
+
+README and `docs/tea-forest.md` link Tea's selected three-tree ensemble and single
+tree (seed 202), immutable archive hashes, final-results report and safe aggregate.
+The models use 1200 features, eight classes including learned background, 20
+decisions and manifest defaults foreground none / cutoff 0.25 / minimum support 3.
+Training remains attributed to frozen Tea revision
+`27ae728e9cb012d2255337d9b3583bbe7f66b3cc`; this documentation does not retrain or
+change the runtime. The original models, browser recording and harness evidence
+retain their separate historical/synthetic scope.
+
+Full 2773-frame validation reports mean fingertip F1@15mm 0.3833437004586795 for
+the ensemble and 0.3370599042841775 for the single. These are post-selection
+validation results. The same frozen choices on all 10,000 untouched test frames
+report F1@15mm 0.37494755678731473 and 0.32798765233655836 respectively. An
+independent audit checked raw identities/separation, ground-truth counts and
+reported localization metric arithmetic; it did not rerun classifier predictions.
+Official random-frame splits do not establish subject independence. The Tea
+final-results report/evidence links retain full denominators and limitations.
+
+`docs/tea-handnet-selected-model-validation.json` records actual selected-artifact
+native/Python parity on Linux x86-64 and Mac arm64: three training depths, both
+foreground modes, byte-exact labels/posteriors/heaps/masks, maximum observation
+and tracker difference 3.41e-13 mm, and exact Linux/Mac outputs. Synthetic 0.1 s
+cadence is numerical/API evidence, not temporal accuracy or measured latency.
+The public JSON excludes raw frame identities, input fingerprints, machine paths
+and private runtime records. Native code and all earlier fixtures are unchanged.

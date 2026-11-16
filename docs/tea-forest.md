@@ -6,6 +6,80 @@ supports three-tree forests and complete 20-decision trees without pruning.
 This is a separate model format and execution path from the historical
 seven-class ten-decision packed CPU/Metal/FPGA example.
 
+## Trained HandNet models
+
+The [Tea HandNet release](https://github.com/twerdster/tea/releases/tag/handnet-forest-2026-11-16)
+contains the validation-selected three-tree ensemble and single tree (seed 202).
+Both evaluate all **20 decisions**, with **1200 features** per tree and eight
+classes: thumb, index, middle, ring, pinky, palm, wrist and learned background.
+Their manifests freeze `foreground: none`, probability cutoff **0.25**, minimum
+component support **3**, and fingertip class IDs `0..4`. Background class 7 is
+separate from invalid-depth label 8 and unknown label 255.
+
+| Download | Archive SHA256 |
+| --- | --- |
+| [Three-tree ensemble](https://github.com/twerdster/tea/releases/download/handnet-forest-2026-11-16/tea-handnet-selected-ensemble.zip) | `e9cff62eead049b5c5d7dc568acab3e2483a228188ec8290c62170d5fe580cf1` |
+| [Single tree](https://github.com/twerdster/tea/releases/download/handnet-forest-2026-11-16/tea-handnet-selected-single.zip) | `6fbab3bee21e95b13b20f95c1fe4b31c979b07e17361d9d7a859993c464e2641` |
+
+Each ZIP contains a relative-path `forest.json`, its exact model/coordinate
+assets and release verification. Download the desired archive, verify its hash
+against the table, then unpack it into a new directory. Build the CLI as shown
+below. For example, after unpacking the ensemble into `models/handnet-ensemble`:
+
+```sh
+mkdir -p out
+build/native/depthtrack_tea models/handnet-ensemble/forest.json \
+  /path/to/depth.u16 out/handnet --trace \
+  --timestamps /path/to/times-seconds.txt \
+  --observations out/handnet-observations.csv --tracks out/handnet-tracks.csv
+```
+
+This command uses the selected manifest's postprocessing defaults. Input is
+320×240 row-major uint16 depth in millimetres, with one real, strictly increasing
+timestamp in seconds per frame. Preserve raw neighbor depths and the declared
+camera intrinsics; another camera/crop needs its own verified calibration and
+matching preprocessing. These are Mac/Linux CPU models; the release does not
+establish deep Metal, mobile-device or FPGA execution.
+
+Training used three independently seeded 90-percent frame bags, 181,979 training
+frames per tree and about 84.76 million balanced samples per tree. Depth/cutoff
+selection used one frozen 300-frame validation subset. The selected settings
+remained fixed for the full validation and untouched test evaluations:
+
+| Model | All 2773 validation frames: mean fingertip F1@15mm | All 10,000 test frames: mean fingertip F1@15mm |
+| --- | ---: | ---: |
+| Three-tree ensemble | 0.383344 | 0.374948 |
+| Single tree (seed 202) | 0.337060 | 0.327988 |
+
+These are F1 scores, not classification-accuracy percentages. Full-validation
+scores are descriptive after selection. F1 includes missed and spurious
+fingertips against valid adjusted sensor positions. The test reports passed an
+independent audit of raw frame identities, separation, ground-truth counts,
+reported localization hits/errors and score arithmetic. That metric audit did
+not rerun per-pixel classifier predictions. Official random-frame splits do not
+establish participant/session independence or reproduce the paper's metric.
+The [Tea final-results report](https://github.com/twerdster/tea/blob/handnet-forest-training/docs/handnet-forest-results.md)
+and [safe aggregate evidence](https://github.com/twerdster/tea/blob/handnet-forest-training/docs/evidence/handnet-forest-2026-11-16.json)
+give the experiment, evaluation denominators and limitations.
+
+Actual selected-model parity passed on **Linux x86-64 and Mac arm64**, using the
+same three training depth frames in both `none` and `near-component` modes.
+Native/Python labels, posteriors, reached heaps and masks matched byte for byte.
+Maximum calibrated observation/tracker difference was 3.41e-13 mm; Linux/Mac
+outputs agreed exactly. The [safe parity record](tea-handnet-selected-model-validation.json)
+contains only aggregate counts, settings and asset identities. Synthetic 0.1 s
+timestamps exercise the API and complete tracker histories; they do not measure
+temporal accuracy or latency. Ground-truth labels and sensor poses were not used
+by this parity check.
+
+The frozen training revision is
+[`27ae728e9cb012d2255337d9b3583bbe7f66b3cc`](https://github.com/twerdster/tea/commit/27ae728e9cb012d2255337d9b3583bbe7f66b3cc).
+Later packaging/documentation commits do not change that provenance. Attribution,
+dataset-release terms and modification details are in each manifest; the dataset's
+CC BY 4.0 release does not relicense historical MATLAB or unrelated legacy code.
+
+## Build and synthetic smoke check
+
 ```sh
 cmake -S . -B build/native -DCMAKE_BUILD_TYPE=Release
 cmake --build build/native --parallel 4
@@ -116,8 +190,7 @@ Core `Forest::predict` probability inference is independent of postprocessing.
 ```sh
 build/native/depthtrack_tea /path/to/forest.json /path/to/depth.u16 out/run \
   --timestamps /path/to/times-seconds.txt --class-ids 0,1,2,3,4 \
-  --observations out/observations.csv --tracks out/tracks.csv \
-  --min-probability .5 --min-support 5
+  --observations out/observations.csv --tracks out/tracks.csv
 ```
 
 Use those class IDs only after verifying the training label map. Supply one
@@ -200,5 +273,6 @@ actual **training** frames with an **untrained synthetic fixture forest** and a
 synthetic 0.1 s cadence. Both foreground conditions passed: labels/heaps/ROI matched
 exactly, observed posterior difference was zero, and the maximum observation
 difference was 2.28e-12 mm. All 30 tracker states and their histories matched. This
-validates the harness, not an actual trained HandNet model; that future check
-must be recorded separately after selected model artifacts exist.
+validates the harness, not an actual trained HandNet model. Actual selected-model
+parity is separately recorded in
+[the trained-model parity evidence](tea-handnet-selected-model-validation.json).

@@ -44,3 +44,31 @@ tracker frame/class/time correspondence, finite outputs and complete histories.
 Declare synthetic models/timestamps explicitly; random split frames cannot prove
 temporal accuracy. Keep runtime artifacts/data outside version control, preserve
 historical CI records, and publish generic platform claims without machine paths.
+
+## Selected HandNet model documentation
+
+`docs/tea-forest.md` links the Tea `handnet-forest-2026-11-16` model archives and
+their SHA256 values. Preserve each archive's relative manifest/assets and selected
+20-decision, cutoff 0.25, minimum support 3, foreground-none defaults. Trained-model
+CLI examples should use these manifest defaults rather than overriding them with
+the generic .5 / support-5 defaults. Training provenance stays at Tea
+`27ae728e9cb012d2255337d9b3583bbe7f66b3cc` when docs/packaging commits advance.
+
+Keep `docs/tea-handnet-selected-model-validation.json` as a safe aggregate of
+actual selected-model Linux/Mac CPU parity: three training frames, both foreground
+modes, asset hashes, exact labels/posteriors/heaps/masks and declared geometry/
+tracker tolerances. Exclude per-frame identities, raw input hashes, private paths
+and runtime ledgers. Preserve the earlier untrained-fixture harness record.
+Synthetic 0.1 s parity timestamps are not measured chronology, latency or temporal
+accuracy; deep Metal/mobile/FPGA execution remains unestablished.
+
+Full-validation results are descriptive after frozen 300-frame selection. Add
+test metrics only after the independent audit and root review; do not choose a
+new model/settings from test. Keep class/domain/denominators and the official
+random-frame versus subject-independent distinction explicit. Verify linked Tea
+results and release availability before publishing this documentation, then
+coordinate the reviewed commit with HandNet's deliberate submodule-pin update.
+The current guide records the completed 10,000-frame original test audit and
+unchanged 20/.25/min3 selection. Distinguish independently reconstructed metric
+arithmetic from rerunning predictions, and keep three-training-frame native
+parity separate from held-out recognition results.

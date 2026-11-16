@@ -7,7 +7,10 @@ Portable depth-tree inference and responsive 3D point tracking, with a recorded 
 Native Tea forests have a separate [CPU inference and calibrated observation
 guide](docs/tea-forest.md). This path loads feature-index trees with their exact
 `Coords.co` files, averages per-tree probabilities, and supports complete deep
-forests. Its new synthetic tests do not establish recognition accuracy.
+forests. [Selected HandNet models and results](docs/tea-forest.md#trained-handnet-models)
+provide a three-tree ensemble and a single tree with 20 decisions, explicit
+learned background and verified Mac/Linux CPU inference. These models are separate
+from the historical detector and browser recording below.
 
 ![Recorded depth-image tracking on Mac CPU](docs/media/improved_tracking_phone.gif)
 
