@@ -130,3 +130,27 @@ to upstream main; native Tea source and the selected-model parity JSON are
 unchanged. This merge check did not access cameras, download neural models, run
 GPU/Metal inference or repeat mobile cross-builds. Combined clean-checkout CI
 remains to be checked on the eventual published commit.
+
+## Optional seed204 model documentation — 2026-11-16
+
+`docs/tea-forest.md` adds the optional
+Tea `handnet-200m-256-seed204-2026-11-16` artifact and its exact ZIP SHA256. This
+single tree uses 256 saved features, 200,216,884 balanced samples, 181,979 training
+frames and 20 decisions, with foreground none / cutoff 0.25 / support 3. The
+original ensemble and seed-202 single remain the default examples. The comparison
+is post-exposure exploratory engineering against matched original seed201/tree0;
+sample count, features and coordinate/pixel seeds change together.
+
+`docs/tea-handnet-seed204-validation.json` is an aggregate-only record of actual
+Linux/Mac native/Python parity: three training depths, both foreground policies,
+exact labels/posteriors/heaps/masks, maximum observation difference
+4.760636329592671e-13 mm, maximum tracker state/history numeric difference
+4.760636329592671e-13 across mixed-unit fields, and exact Linux/Mac outputs. Synthetic 0.1 s timestamps
+establish numerical agreement only, not recognition accuracy, measured chronology,
+tracking accuracy or latency. Public evidence contains no raw identities, input
+fingerprints or private runtime paths. Training revision remains Tea 27ae728.
+
+This additive update preserves native/browser code and all prior model evidence.
+JSON, claim/hash consistency, relative links, privacy and diff checks cover these
+files; native inference, browser, camera, GPU and dataset evaluations are not rerun
+for this documentation change.
