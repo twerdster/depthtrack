@@ -101,3 +101,25 @@ browser tests, Python tracker/replay checks and both CPU backend fixture variant
 Preserve upstream real-model smoke as historical evidence; do not describe these
 CPU/mock-based merge checks as fresh neural, camera or phone execution. Recheck
 clean-checkout CI on the reviewed integration commit before publishing/pinning.
+
+## Optional seed204 comparison documentation
+
+Keep `docs/tea-handnet-seed204-validation.json` separate from the original selected
+ensemble/seed-202 parity record and the earlier untrained harness fixture. The
+optional seed204 model has 256 saved features, 200,216,884 samples and 20 decisions;
+preserve its model/coordinate/public-manifest and ZIP hashes, cutoff 0.25,
+support 3, foreground none and IDs 0..4. Its separate release does not replace the
+original release or default examples. Exclude private release-verification files,
+raw input/output fingerprints, frame identities and runtime paths from public
+aggregates and ZIPs; use an explicit reviewed payload allowlist.
+
+Three training frames, both foreground policies and synthetic 0.1 s cadence
+establish native/Python and Linux/Mac numerical parity only. Keep the exact
+4.760636329592671e-13 mm observation bound and the tracker state/history numeric
+bound of 4.760636329592671e-13 separate from accuracy or latency. Tracker fields
+have mixed units; do not assign millimetres to the complete state/history bound.
+Link Tea's report for independent held-out metric auditing; comparisons after the
+original test disclosure are exploratory. Distinguish matched seed201/tree0 from
+the original best single seed202, and do not attribute the jointly changed sample
+count, features and coordinate/pixel seeds to one isolated cause. Preserve all
+browser, historical model, platform and source-license boundaries.

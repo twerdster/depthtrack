@@ -78,6 +78,58 @@ Later packaging/documentation commits do not change that provenance. Attribution
 dataset-release terms and modification details are in each manifest; the dataset's
 CC BY 4.0 release does not relicense historical MATLAB or unrelated legacy code.
 
+## Optional seed204 comparison model
+
+The separate [200m/256 comparison release](https://github.com/twerdster/tea/releases/tag/handnet-200m-256-seed204-2026-11-16)
+provides one additional eight-class tree: **200,216,884 balanced training samples**,
+**256 saved features**, **181,979 training frames** and **20 decisions**. Its
+manifest preserves foreground `none`, cutoff **0.25**, minimum support **3** and
+fingertip IDs `0..4`. The original ensemble and seed-202 single above remain the
+default examples; this optional artifact does not replace them.
+
+| Download | Archive SHA256 |
+| --- | --- |
+| [Seed204 single tree](https://github.com/twerdster/tea/releases/download/handnet-200m-256-seed204-2026-11-16/tea-handnet-200m-256-seed204.zip) | `53b8fc95c5c8bc3f24c191e5ffda8a80787f64635e45d9e1a16c9dfbdf9006c6` |
+
+Verify against the release's
+[SHA256SUMS.txt](https://github.com/twerdster/tea/releases/download/handnet-200m-256-seed204-2026-11-16/SHA256SUMS.txt)
+before unpacking into a new directory. The ZIP contains only `forest.json`,
+`assets/tree000/model.tree` and `assets/tree000/Coords.co`. Keep the model and
+coordinates together. After building the CLI below and unpacking into
+`models/handnet-seed204`, run:
+
+```sh
+mkdir -p out
+build/native/depthtrack_tea models/handnet-seed204/forest.json \
+  /path/to/depth.u16 out/seed204 --trace \
+  --timestamps /path/to/times-seconds.txt \
+  --observations out/seed204-observations.csv --tracks out/seed204-tracks.csv
+```
+
+This uses the selected manifest defaults and the same calibrated metric-depth
+input contract as the original models. It does not load the browser's compact
+tree. The training implementation remains frozen at Tea `27ae728`; dataset
+attribution and terms are embedded in the manifest.
+
+The [seed204 parity aggregate](tea-handnet-seed204-validation.json) records
+Linux x86-64 and Mac arm64 checks on the same **three training depth frames**,
+in both `none` and `near-component` modes. Native/Python labels, probability bytes,
+heaps and masks match exactly, as do Linux/Mac outputs. Maximum observation
+difference is **4.760636329592671e-13 mm**; the maximum tracker state/history
+numeric difference is **4.760636329592671e-13**, across fields with mixed units.
+The **synthetic 0.1 s cadence**
+checks numerical integration and complete tracker histories; it establishes no
+recognition accuracy, measured temporal accuracy, latency or deep Metal/mobile/
+FPGA execution. Labels and sensor positions were not used by this parity check.
+
+The [Tea comparison report](https://github.com/twerdster/tea/blob/main/docs/handnet-comparison.md)
+records selection and evaluation separately. This is post-exposure exploratory
+engineering after the original test results were disclosed. The matched baseline
+is original seed201/tree0, not the original validation-selected seed202 single.
+Sample count, feature count and coordinate/pixel seeds change together; this is
+not an isolated test of sample-count effects. No accuracy score follows from the
+numerical parity record.
+
 ## Build and synthetic smoke check
 
 ```sh
